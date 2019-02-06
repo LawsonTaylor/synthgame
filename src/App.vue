@@ -62,6 +62,9 @@ import Svoosh from '@/components/Svoosh'
 import { SYNTH_BPM } from '@/constants'
 import levels from '@/levels'
 
+// import default sound + pattern
+import defaultTones from '@/defaults';
+
 export default {
   name: 'App',
   data () {
@@ -96,7 +99,8 @@ export default {
         .then(data => {
           this.customLevelIsActive = true
           this.customLevelSequence = data.sequenceArray
-          this.startPreset(data.parameterValues)
+          console.log(data);
+          this.startPreset(defaultTones.settings)
         })
     }
 
@@ -117,7 +121,8 @@ export default {
       timerIsRunning: state => state.gameState.timerIsRunning
     }),
     ...mapGetters({
-      allParametersMatchGoal: 'allParametersMatchGoal'
+      allParametersMatchGoal: 'allParametersMatchGoal',
+      attemptMade: 'attemptMade',
     }),
     isGameOver () {
       return this.$store.state.gameState.isGameOver
@@ -190,7 +195,7 @@ export default {
               })
             }
           }
-        }, error => console.log)
+        }, error => console.log(error))
     },
     displaySuccesMessage () {
       this.displaySuccessOverlay = true
@@ -231,6 +236,8 @@ export default {
       // rest will be done by watcher of sequencesPassedInCurrentLevel
     },
     startPreset (parameters) {
+      // eslint-disable-next-line
+      console.log(parameters);
       const usedParameters = mapValues(parameters,
         audioModule => mapValues(audioModule,
           parameter => !!parameter))
@@ -294,6 +301,9 @@ export default {
     }
   },
   watch: {
+    attemptMade (val) {
+
+    },
     allParametersMatchGoal (val) {
       if (val === true && this.timerIsRunning) {
         this.beginSuccessSvoosh()

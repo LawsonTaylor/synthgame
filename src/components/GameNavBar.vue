@@ -61,10 +61,15 @@
       </h2>
     </div>
     <!-- <span v-if="timerIsRunning === false && createModeIsActive === false" class="timer">First listen to the sound we'll recreate</span> -->
-    <span :style="{
+    <!-- <span :style="{
       'animation': timeLeftSeconds < 11 ? '.5s infinite blink' : '',
       'color': timeLeftSeconds < 5 ? oscillatorColor : '',
-    }" v-if="timerIsRunning === true && createModeIsActive === false" class="timer">{{paddedTimeLeftString}}</span>
+    }" v-if="timerIsRunning === true && createModeIsActive === false" class="timer">{{paddedTimeLeftString}}</span> -->
+
+    <span>
+      <button class="button-next" @click="makeAttempt">Attemps Remaning: <span>{{attemptsRemaining}}</span></button>
+    </span>
+
 
     <div class="right">
       <template v-if="createModeIsActive === false">
@@ -99,12 +104,14 @@ import { MODULE_OSCILLATOR_COLOR, MODULE_OSCILLATORTWO_COLOR, MODULE_ENVELOPE_CO
 import padStart from 'lodash/padStart'
 import some from 'lodash/some'
 import AfterCreateOverlay from '@/components/AfterCreateOverlay'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'gameNavBar',
   data: function () {
     return {
       timeLeftSeconds: 30,
+      attemptsRemaining: 10,
       timer: null,
       indicatorActive: true,
       exportPresetName: '',
@@ -162,30 +169,50 @@ export default {
     },
     paddedHighScoreString () {
       return `${padStart(this.highScore, 5, '0')}`
-    }
+    },
   },
   methods: {
-    startTimer () {
-      this.timeLeftSeconds = 30
-      this.timer = this.timer || window.setInterval(() => {
-        if (this.timeLeftSeconds === 0) return this.timeIsUp()
-        this.timeLeftSeconds--
-      }, 1000)
+    makeAttempt () {
+      console.log('make attempt')
+      this.attemptsRemaining -= 1;
+
+      //check result
+        // if valid submit score, pass level 
+
+      // const paramsMatch = this.$store.getters.allParametersMatchGoal;
+      this.$store.commit('toggleAttempt');
+
+  
+      if(this.attemptsRemaining === 0){
+        this.$store.dispatch('gameOver');
+        //reset counter
+        this.attemptsRemaining = 10;
+      } 
+      
+      this.$store.commit('toggleAttempt');
     },
-    stopTimer () {
-      window.clearInterval(this.timer)
-      this.timer = null
-      this.$store.commit('addValueToScore', this.timeLeftSeconds)
-      if (this.$store.state.gameState.score > this.$store.state.gameState.highScore) {
-        this.$store.commit('updateHighScore', this.$store.state.gameState.score)
-      }
-    },
-    timeIsUp () {
-      // alert('game\'s over')
-      this.stopTimer()
-      this.$store.dispatch('gameOver')
-      // this.startTimer()
-    },
+
+    // startTimer () {
+    //   this.timeLeftSeconds = 30
+    //   this.timer = this.timer || window.setInterval(() => {
+    //     if (this.timeLeftSeconds === 0) return this.timeIsUp()
+    //     this.timeLeftSeconds--
+    //   }, 1000)
+    // },
+    // stopTimer () {
+    //   window.clearInterval(this.timer)
+    //   this.timer = null
+    //   this.$store.commit('addValueToScore', this.timeLeftSeconds)
+    //   if (this.$store.state.gameState.score > this.$store.state.gameState.highScore) {
+    //     this.$store.commit('updateHighScore', this.$store.state.gameState.score)
+    //   }
+    // },
+    // timeIsUp () {
+    //   // alert('game\'s over')
+    //   this.stopTimer()
+    //   this.$store.dispatch('gameOver')
+    //   // this.startTimer()
+    // },
     moduleIsUseable (moduleName) {
       if (this.createModeIsActive) return true
       return some(this.knobsAvailable[moduleName]) // some are truthy
@@ -201,13 +228,13 @@ export default {
           this.exportPresetLink = `${window.location.origin}/?preset=${presetId}`
         })
     }
-  },
-  watch: {
-    timerIsRunning (val) {
-      if (val) return this.startTimer()
-      this.stopTimer()
-    }
   }
+  // watch: {
+  //   timerIsRunning (val) {
+  //     if (val) return this.startTimer()
+  //     this.stopTimer()
+  //   }
+  // }
 }
 </script>
 

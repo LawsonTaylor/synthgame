@@ -47,6 +47,7 @@ export default new Vuex.Store({
       }
     },
     gameState: {
+      attemptMade: false,
       createModeIsActive: false,
       sweepArmed: true,
       marginOsc: 0,
@@ -218,9 +219,13 @@ export default new Vuex.Store({
     },
     setActiveSequence (state, sequence) {
       state.activeSequence = sequence
+    },
+    toggleAttemptMade (state) {
+      state.gameState.attemptMade = !state.gameState.attemptMade;
     }
   },
   getters: {
+    attemptMade : (state, getters) => { return state.gameState.attemptMade},
     allParametersMatchGoal: (state, getters) => {
       return flatMap(getters.audioParametersMatchGoalWithMargin, val => values(val))
         .every(val => val)
