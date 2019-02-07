@@ -48,6 +48,7 @@ export default new Vuex.Store({
     },
     gameState: {
       attemptMade: false,
+      attemptsRemaining: 10,
       createModeIsActive: false,
       sweepArmed: true,
       marginOsc: 0,
@@ -220,12 +221,18 @@ export default new Vuex.Store({
     setActiveSequence (state, sequence) {
       state.activeSequence = sequence
     },
-    toggleAttemptMade (state) {
+    notifyAttemptMade (state) {
       state.gameState.attemptMade = !state.gameState.attemptMade;
+    },
+    decrementAttempts (state) {
+      state.gameState.attemptsRemaining -= 1;
+    },
+    setAttempts (state, payload) {
+      state.gameState.attemptsRemaining = payload.attempts;
     }
   },
   getters: {
-    attemptMade : (state, getters) => { return state.gameState.attemptMade},
+    attemptMade : (state, getters) => { return state.gameState.attemptMade },
     allParametersMatchGoal: (state, getters) => {
       return flatMap(getters.audioParametersMatchGoalWithMargin, val => values(val))
         .every(val => val)
@@ -247,6 +254,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    makeAttempt ({ state, commit }) {
+      commit('notifyAttemptMade')
+      commit('decrementAttempts')
+    },
     randomizeAudioParameters ({state, commit}, randomizeArray) {
       const randomizeValues = (obj, selectObj) => mapValues(obj, (val, moduleName) => {
         return mapValues(val, (val, parameterName) => {
@@ -341,7 +352,11 @@ export default new Vuex.Store({
     setLevel ({state, commit}, {knobsAvailable}) {
       commit('setKnobsAvailable', knobsAvailable)
     },
-    startNewLevel ({state, commit, dispatch}, {knobsAvailable, level}) {
+    startNewLevel ({state, commit, dispatch}, {knobsAvailable, level, attempts}) {
+      commit({
+        type: 'setAttempts',
+        attempts,
+      });
       commit('resetSequencesPassedInCurrentLevel')
       if (level) commit('setLevelValue', level)
       return dispatch('setLevel', {

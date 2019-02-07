@@ -10,6 +10,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 10,
     levelData: {
       text: 'Listen to the sound playing. Once you hit Ready, you have 30 seconds to recreate it.'
     }
@@ -23,6 +24,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 8,
     levelData: {
       text: 'Tip: the white guidelines show you the way.'
     }
@@ -36,6 +38,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 6,
     levelData: {
       text: 'The oscillator is the source of electronic sound. You’ll use the knobs and dials to shape the outputted signal. '
     }
@@ -50,6 +53,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 10,
     levelData: {
       text: 'Both detune and octave control the pitch.'
     }
@@ -64,6 +68,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Octave changes the pitch 12 notes a time.'
     }
@@ -78,6 +83,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Detune changes the pitch by cents. An octave contains 1200 cents.'
     }
@@ -91,6 +97,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'A waveform is the shape of the outputted signal.'
     }
@@ -104,6 +111,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'A sine results in a smooth, plain sound, while a sawtooth results in a harmonically rich buzz.'
     }
@@ -117,6 +125,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'The waveform is the most fundamental building block in synthesis.'
     }
@@ -131,6 +140,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'The octave and detune determine the amount the waveform is repeated in a second: hertz.'
     }
@@ -145,6 +155,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'The more waveform iterations in a second, the higher the pitch.'
     }
@@ -160,6 +171,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Play around with all 3 controls to hear the sound change. Watch the timer though!'
     }
@@ -175,6 +187,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: "Now that you understand the basics, let's step it up a notch."
     }
@@ -190,6 +203,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Enjoy this easy level, it will get trickier soon.'
     }
@@ -205,6 +219,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Wonder why the sound is thin, compared to what you hear in most music?'
     }
@@ -221,6 +236,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'You unlocked the second oscillator!'
     }
@@ -237,6 +253,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Two oscillators result in a fatter sound.'
     }
@@ -253,6 +270,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'The sound gets even fatter when you tune the oscs differently.'
     }
@@ -269,6 +287,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Try setting the oscillators to different octaves.'
     }
@@ -285,6 +304,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'And yes, we too can do this all day.'
     }
@@ -300,6 +320,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Back by popular demand: waveforms.'
     }
@@ -315,6 +336,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Try combining waveforms and hear what that sounds like.'
     }
@@ -330,6 +352,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'One more chance to play around with only waveforms.'
     }
@@ -346,6 +369,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'But what if we have different waveforms and slightly detune the oscs?'
     }
@@ -363,6 +387,7 @@ export default [
     filter: {},
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Or if we combine waveform, detune, and octave controls?'
     }
@@ -380,6 +405,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'You unlocked the filter!'
     }
@@ -397,6 +423,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'There are different types of filters. Try them!'
     }
@@ -414,6 +441,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'A filter passes signals with a frequency lower or higher than the selected cutoff, or both.'
     }
@@ -431,6 +459,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Introducing the control we love most: cutoff frequency.'
     }
@@ -448,6 +477,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Use the cutoff frequency to take out unwanted parts of the sound.'
     }
@@ -465,6 +495,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'The filter is the essence of subtractive synthesis.'
     }
@@ -482,6 +513,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Resonance controls how sharp the cutoff is.'
     }
@@ -499,6 +531,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Set the resonance low, and gradually cut off unwanted parts.'
     }
@@ -516,6 +549,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Set the resonance to high, and cut off the unwanted parts more precisely.'
     }
@@ -534,6 +568,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Play around with both resonance and cutoff.'
     }
@@ -552,6 +587,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Fun fact: equalizers are filters too.'
     }
@@ -570,6 +606,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Yes, you have been filtering all along.'
     }
@@ -588,6 +625,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Use this knowledge when you adjust the eq of your car radio, and impress your friends.'
     }
@@ -607,6 +645,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'But first clear a few more levels.'
     }
@@ -626,6 +665,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: "You came this far, don't give up now."
     }
@@ -645,6 +685,7 @@ export default [
     },
     envelope: {},
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Last level before we move on to the next module.'
     }
@@ -658,6 +699,7 @@ export default [
       attack: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'You unlocked Envelope!'
     }
@@ -671,6 +713,7 @@ export default [
       attack: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'With attack, you can control how long it takes the sound to reach its peak volume.'
     }
@@ -684,6 +727,7 @@ export default [
       decay: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'With decay, control how long it takes for the sound to drop from its peak to the sustain level.'
     }
@@ -697,6 +741,7 @@ export default [
       decay: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'A low decay level results in a plucky sound.'
     }
@@ -710,6 +755,7 @@ export default [
       sustain: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Sustain sets the volume at which the sound remains, for as long the note is held.'
     }
@@ -723,6 +769,7 @@ export default [
       sustain: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'With a short attack and decay, sustain essentially sets the volume of the note.'
     }
@@ -736,6 +783,7 @@ export default [
       release: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Release controls the time it takes for the sound to return to zero, after sustain.'
     }
@@ -749,6 +797,7 @@ export default [
       release: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'A short release results in snappy sounds. Try it!'
     }
@@ -763,6 +812,7 @@ export default [
       decay: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'Time to start mixing the controls of the envelope.'
     }
@@ -777,6 +827,7 @@ export default [
       sustain: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: "You're close to fully equiped now."
     }
@@ -791,6 +842,7 @@ export default [
       release: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'After this, we have one more module to cover.'
     }
@@ -805,6 +857,7 @@ export default [
       release: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'You should reconsider your career by now.'
     }
@@ -820,6 +873,7 @@ export default [
       attack: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'It takes some serious decication to get to this level.'
     }
@@ -835,6 +889,7 @@ export default [
       attack: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: "We're impresed."
     }
@@ -851,6 +906,7 @@ export default [
       release: true
     },
     lfo: {},
+    attempts: 12,
     levelData: {
       text: 'You might just be the next star producer.'
     }
@@ -864,6 +920,7 @@ export default [
     lfo: {
       amount: true
     },
+    attempts: 12,
     levelData: {
       text: 'You unlocked the LFO!'
     }
@@ -877,6 +934,7 @@ export default [
     lfo: {
       amount: true
     },
+    attempts: 12,
     levelData: {
       text: 'Same as the oscillator, LFO produces a signal, but at a low frequency.'
     }
@@ -890,6 +948,7 @@ export default [
     lfo: {
       amount: true
     },
+    attempts: 12,
     levelData: {
       text: "It's connected to the first oscillator's frequency, making it go up and down."
     }
@@ -904,6 +963,7 @@ export default [
       amount: true,
       frequency: true
     },
+    attempts: 12,
     levelData: {
       text: 'Adjust the frequency, and hear the pitch go up and down at different speeds.'
     }
@@ -918,6 +978,7 @@ export default [
       amount: true,
       frequency: true
     },
+    attempts: 12,
     levelData: {
       text: 'Right now, we use a sinewave, which eases the effect LFO has on the pitch.'
     }
@@ -932,6 +993,7 @@ export default [
       amount: true,
       frequency: true
     },
+    attempts: 12,
     levelData: {
       text: 'But we can use other waveforms, too, just like regular oscillators.'
     }
@@ -946,6 +1008,7 @@ export default [
       amount: true,
       type: true
     },
+    attempts: 12,
     levelData: {
       text: 'Now, try some other waveforms.'
     }
@@ -960,6 +1023,7 @@ export default [
       amount: true,
       type: true
     },
+    attempts: 12,
     levelData: {
       text: 'Use square to get that glitch sound.'
     }
@@ -975,6 +1039,7 @@ export default [
       frequency: true,
       type: true
     },
+    attempts: 12,
     levelData: {
       text: 'Now, play around with all the LFO controls.'
     }
@@ -993,6 +1058,7 @@ export default [
     envelope: {},
     lfo: {
     },
+    attempts: 12,
     levelData: {
       text: 'You did it! You mastered the basics of subtractive synthesis.'
     }
@@ -1013,6 +1079,7 @@ export default [
     envelope: {},
     lfo: {
     },
+    attempts: 12,
     levelData: {
       text: 'Now the real fun starts.'
     }
@@ -1033,6 +1100,7 @@ export default [
     envelope: {},
     lfo: {
     },
+    attempts: 12,
     levelData: {
       text: 'At this point, you might be wondering if there is even an end to this game.'
     }
@@ -1065,6 +1133,7 @@ export default [
       amount: true,
       type: true
     },
+    attempts: 12,
     levelData: {
       text: 'Just like subtractive synthesis, there is no end to this game.'
     }
@@ -1097,6 +1166,7 @@ export default [
       amount: true,
       type: true
     },
+    attempts: 12,
     levelData: {
       text: "Thank you for playing. You're on your own now."
     }
@@ -1122,6 +1192,7 @@ export default [
     lfo: {
       amount: true
     },
+    attempts: 12,
     levelData: {
       text: 'Is there even anyone that will ever read this?'
     }
@@ -1148,6 +1219,7 @@ export default [
     },
     lfo: {
     },
+    attempts: 12,
     levelData: {
       text: 'This is unreal. You must be a famous producer.'
     }
@@ -1178,6 +1250,7 @@ export default [
     lfo: {
       amount: true
     },
+    attempts: 12,
     levelData: {
       text: "Well, if so, why don't you teach us?"
     }
@@ -1206,6 +1279,7 @@ export default [
       frequency: true,
       amount: true
     },
+    attempts: 12,
     levelData: {
       text: 'Shoot an email to bart@okbye.io'
     }
@@ -1235,6 +1309,7 @@ export default [
       amount: true,
       type: true
     },
+    attempts: 12,
     levelData: {
       text: 'We need people like you.'
     }
@@ -1267,6 +1342,7 @@ export default [
       amount: true,
       type: true
     },
+    attempts: 12,
     levelData: {
       text: 'Ok Bye'
     }

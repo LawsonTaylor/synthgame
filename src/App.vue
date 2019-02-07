@@ -9,17 +9,9 @@
     </transition>
     <before-create-overlay v-if="showCreatePreview" @showCreate="showCreate"/>
     <transition name="slide-up-slide-down">
-      <preview-screen
-        v-if="displayPreviewOverlay"
-        @startLevel="beginSvoosh"
-      />
+      <preview-screen v-if="displayPreviewOverlay" @startLevel="beginSvoosh"/>
     </transition>
-    <svoosh
-      v-if="isThereSvooshComponent"
-      :isFired="svooshIt"
-      @bye="endSvoosh"
-      black
-    />
+    <svoosh v-if="isThereSvooshComponent" :isFired="svooshIt" @bye="endSvoosh" black/>
     <svoosh
       v-if="isThereSuccessSvooshComponent"
       :isFired="successSvooshIt"
@@ -27,53 +19,53 @@
       @bye="endSuccessSvoosh"
     />
     <transition name="slideout">
-      <success-overlay
-        v-if="displaySuccessOverlay"
-        @next="startNextLevel"
-      />
+      <success-overlay v-if="displaySuccessOverlay" @next="startNextLevel"/>
     </transition>
 
-    <failure-overlay
-      v-if="isGameOver"
-      @startagain="startAgain"
-    />
+    <transition name="slideout">
+      <original-sound-overlay v-if="displayOriginalSoundOverlay" :timer="timer"/>
+    </transition>
+
+    <failure-overlay v-if="isGameOver" @startagain="startAgain"/>
 
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </div> -->
+    </div>-->
     <router-view/>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-import random from 'lodash/random'
-import times from 'lodash/times'
-import mapValues from 'lodash/mapValues'
-import audio from '@/audio'
-import { getPresetById } from '@/db'
-import SuccessOverlay from '@/components/SuccessOverlay'
-import FailureOverlay from '@/components/FailureOverlay'
-import BeforeCreateOverlay from '@/components/BeforeCreateOverlay'
-import StartScreen from '@/components/StartScreen'
-import PreviewScreen from '@/components/PreviewScreen'
-import Svoosh from '@/components/Svoosh'
-import { SYNTH_BPM } from '@/constants'
-import levels from '@/levels'
+import { mapState, mapGetters } from "vuex";
+import random from "lodash/random";
+import times from "lodash/times";
+import mapValues from "lodash/mapValues";
+import audio from "@/audio";
+import { getPresetById } from "@/db";
+import SuccessOverlay from "@/components/SuccessOverlay";
+import FailureOverlay from "@/components/FailureOverlay";
+import BeforeCreateOverlay from "@/components/BeforeCreateOverlay";
+import StartScreen from "@/components/StartScreen";
+import PreviewScreen from "@/components/PreviewScreen";
+import Svoosh from "@/components/Svoosh";
+import { SYNTH_BPM } from "@/constants";
+import levels from "@/levels";
+import OriginalSoundOverlay from "./components/OriginalSoundOverlay";
 
 // import default sound + pattern
-import defaultTones from '@/defaults';
+import defaultTones from "@/defaults";
 
 export default {
-  name: 'App',
-  data () {
+  name: "App",
+  data() {
     return {
       kickTime: 0,
       displaySuccessOverlay: false,
       displayFailureOverlay: false,
       displayStartOverlay: true,
       displayPreviewOverlay: false,
+      displayOriginalSoundOverlay: false,
       loop: null,
       isThereSvooshComponent: false,
       svooshIt: false,
@@ -81,8 +73,10 @@ export default {
       successSvooshIt: false,
       customLevelIsActive: false,
       customLevelSequence: [],
-      showCreatePreview: false
-    }
+      showCreatePreview: false,
+      timer: 8,
+      timerInterval: 0,
+    };
   },
   components: {
     SuccessOverlay,
@@ -90,236 +84,285 @@ export default {
     StartScreen,
     PreviewScreen,
     Svoosh,
-    BeforeCreateOverlay
+    BeforeCreateOverlay,
+    OriginalSoundOverlay
   },
-  created () {
-    this.init()
+  created() {
+    this.init();
     if (this.$route.query.preset) {
-      getPresetById(this.$route.query.preset)
-        .then(data => {
-          this.customLevelIsActive = true
-          this.customLevelSequence = data.sequenceArray
-          console.log(data);
-          this.startPreset(defaultTones.settings)
-        })
+      getPresetById(this.$route.query.preset).then(data => {
+        this.customLevelIsActive = true;
+        this.customLevelSequence = data.sequenceArray;
+        console.log(data);
+        this.startPreset(defaultTones.settings);
+      });
     }
 
-    window.letsPlay = () => this.initM()
+    window.letsPlay = () => this.initM();
 
     // Pc keyboard listener (might be needed for mobile)
-    document.addEventListener('keypress', (event) => {
-      if (audio.state.Tone.context.state !== 'running') {
-        audio.state.Tone.context.resume()
+    document.addEventListener("keypress", event => {
+      if (audio.state.Tone.context.state !== "running") {
+        audio.state.Tone.context.resume();
       }
       // const key = event.key
-    })
+    });
   },
   computed: {
     ...mapState({
-      sequencesPassedInCurrentLevel: state => state.gameState.sequencesPassedInCurrentLevel,
+      sequencesPassedInCurrentLevel: state =>
+        state.gameState.sequencesPassedInCurrentLevel,
       level: state => state.gameState.level,
       timerIsRunning: state => state.gameState.timerIsRunning
     }),
     ...mapGetters({
-      allParametersMatchGoal: 'allParametersMatchGoal',
-      attemptMade: 'attemptMade',
+      allParametersMatchGoal: "allParametersMatchGoal",
+      attemptMade: "attemptMade"
     }),
-    isGameOver () {
-      return this.$store.state.gameState.isGameOver
+    isGameOver() {
+      return this.$store.state.gameState.isGameOver;
     }
   },
   methods: {
-    init () {
+    init() {
       // Retrieve highscore from local storage
-      this.$store.commit('updateHighScore', localStorage.getItem('highscore'))
+      this.$store.commit("updateHighScore", localStorage.getItem("highscore"));
       // initialize the synth
-      audio.init().toMaster()
+      audio.init().toMaster();
       // create loop wich sequences 4 notes
-      const randomLoop = times(16).map(i => random(-12, 12))
-      this.loop = audio.setMainLoop({
-        noteArray: times(16),
-        subdivision: '8n'
-      }, (time, i) => { // i here is just a note from the note array define above
-        if (this.$store.state.gameState.timerIsRunning === false && !this.displaySuccessOverlay && !this.displayPreviewOverlay) {
-          if (this.$store.state.gameState.sweepArmed) {
-            audio.playSweep() // plan this ahead?
-            this.$store.commit('disarmSweep')
+      const randomLoop = times(16).map(i => random(-12, 12));
+      this.loop = audio.setMainLoop(
+        {
+          noteArray: times(16),
+          subdivision: "8n"
+        },
+        (time, i) => {
+          // i here is just a note from the note array define above
+          if (
+            this.$store.state.gameState.timerIsRunning === false &&
+            !this.displaySuccessOverlay &&
+            !this.displayPreviewOverlay
+          ) {
+            if (this.$store.state.gameState.sweepArmed) {
+              audio.playSweep(); // plan this ahead?
+              this.$store.commit("disarmSweep");
+            }
           }
-        }
-        if ((this.displayPreviewOverlay && this.kickTime === 0 && !this.displayStartOverlay) || (this.displaySuccessOverlay && this.kickTime === 0 && !this.displayStartOverlay)) {
-          audio.playKick()
-          this.$store.commit('armSweep')
-          this.kickTime++
-        } else if (this.kickTime < 15) {
-          this.kickTime++
-        } else {
-          this.kickTime = 0
-        };
-        if (!this.customLevelIsActive) {
-          audio.playNote(randomLoop[i], {})
-        } else {
-          if (this.customLevelSequence[i].selected) {
-            audio.playNote(this.customLevelSequence[i].pitch, {
-              noteLength: ['16t', '8n', '4n', '2n', '1n'][this.customLevelSequence[i].noteLength],
-              volume: this.customLevelSequence[i].volume
-            })
+          if (
+            (this.displayPreviewOverlay &&
+              this.kickTime === 0 &&
+              !this.displayStartOverlay) ||
+            (this.displaySuccessOverlay &&
+              this.kickTime === 0 &&
+              !this.displayStartOverlay)
+          ) {
+            audio.playKick();
+            this.$store.commit("armSweep");
+            this.kickTime++;
+          } else if (this.kickTime < 15) {
+            this.kickTime++;
+          } else {
+            this.kickTime = 0;
           }
+          if (!this.customLevelIsActive) {
+            audio.playNote(randomLoop[i], {});
+          } else {
+            if (this.customLevelSequence[i].selected) {
+              audio.playNote(this.customLevelSequence[i].pitch, {
+                noteLength: ["16t", "8n", "4n", "2n", "1n"][
+                  this.customLevelSequence[i].noteLength
+                ],
+                volume: this.customLevelSequence[i].volume
+              });
+            }
+          }
+          // if (i === 15) this.$store.commit('increaseSequencesPassedInCurrentLevel')
         }
-
-        // if (i === 15) this.$store.commit('increaseSequencesPassedInCurrentLevel')
-      })
+      );
       // set BPM
-      audio.setBpm(SYNTH_BPM)
+      audio.setBpm(SYNTH_BPM);
       // start tone general
-      audio.start()
+      audio.start();
       // start loop
       //
     },
-    initM () {
-      navigator.requestMIDIAccess()
-        .then(access => {
+    initM() {
+      navigator.requestMIDIAccess().then(
+        access => {
           if (access.inputs.size > 0) {
-            const input = access.inputs.values().next().value // get the first input
-            console.log(input.name)
+            const input = access.inputs.values().next().value; // get the first input
+            console.log(input.name);
             input.onmidimessage = e => {
-              if (e.data.length !== 3) return
-              const pS = e.data[1]
-              const value = e.data[2]
-              const device = Object.keys(this.$store.state.audioParameters)[('' + pS)[0] - 1]
-              const parameter = Object.keys(this.$store.state.audioParameters[device])[('' + pS)[1]]
-              this.$store.commit('setAudioParameter', { device,
+              if (e.data.length !== 3) return;
+              const pS = e.data[1];
+              const value = e.data[2];
+              const device = Object.keys(this.$store.state.audioParameters)[
+                ("" + pS)[0] - 1
+              ];
+              const parameter = Object.keys(
+                this.$store.state.audioParameters[device]
+              )[("" + pS)[1]];
+              this.$store.commit("setAudioParameter", {
+                device,
                 parameter,
-                value: this.$store.state.gameState.possibleValues[device][parameter]
-                  ? this.$store.state.gameState.possibleValues[device][parameter][e.data[2]]
+                value: this.$store.state.gameState.possibleValues[device][
+                  parameter
+                ]
+                  ? this.$store.state.gameState.possibleValues[device][
+                      parameter
+                    ][e.data[2]]
                   : e.data[2]
-              })
-            }
+              });
+            };
           }
-        }, error => console.log(error))
+        },
+        error => console.log(error)
+      );
     },
-    displaySuccesMessage () {
-      this.displaySuccessOverlay = true
+    displaySuccesMessage() {
+      this.displaySuccessOverlay = true;
     },
     // displayFailureMessage () {
     //   this.displaySuccessOverlay = true
     // },
-    startAgain () {
-      location.reload()
+    startAgain() {
+      location.reload();
     },
-    startPlayMode () {
-      this.displayStartOverlay = false // hide start overlay
-      this.startLevel(0)
+    startPlayMode() {
+      this.displayStartOverlay = false; // hide start overlay
+      this.startLevel(0);
     },
-    startCreateMode () {
-      this.displayStartOverlay = false
-      this.displayFailureOverlay = false
-      this.$store.commit('setCreateMode', true)
+    startCreateMode() {
+      this.displayStartOverlay = false;
+      this.displayFailureOverlay = false;
+      this.$store.commit("setCreateMode", true);
     },
-    startLevel (level) {
+    startLevel(level) {
       // disable all overlays
-      this.displaySuccessOverlay = false
-      this.displayFailureOverlay = false
-      this.displayStartOverlay = false
-      this.displayPreviewOverlay = true
+      this.displaySuccessOverlay = false;
+      this.displayFailureOverlay = false;
+      this.displayStartOverlay = false;
+      this.displayPreviewOverlay = true;
       // import level config
-      const availableParameters = levels[level] || levels[levels.length - 1]
+      const availableParameters = levels[level] || levels[levels.length - 1];
 
-      this.$store.dispatch('startNewLevel', {
+      this.$store.dispatch("startNewLevel", {
         knobsAvailable: availableParameters,
-        levelNumber: level || 0
-      })
-      this.$store.dispatch('randomizGoalParameters') // first randomize the goal
-      this.$store.dispatch('randomizeAudioParameters', availableParameters) // and the audio params
-      this.$store.dispatch('setSynthToGoal', audio) // then let the user hear it
+        levelNumber: level || 0,
+        attempts: availableParameters.attempts
+      });
+      this.$store.dispatch("randomizGoalParameters"); // first randomize the goal
+      this.$store.dispatch("randomizeAudioParameters", availableParameters); // and the audio params
+      this.$store.dispatch("audio", audio); // then let the user hear it
 
-      this.loop.start()
+      this.loop.start();
       // rest will be done by watcher of sequencesPassedInCurrentLevel
     },
-    startPreset (parameters) {
+    startPreset(parameters) {
       // eslint-disable-next-line
       console.log(parameters);
-      const usedParameters = mapValues(parameters,
-        audioModule => mapValues(audioModule,
-          parameter => !!parameter))
+      const usedParameters = mapValues(parameters, audioModule =>
+        mapValues(audioModule, parameter => !!parameter)
+      );
 
       // disable all overlays
-      this.displaySuccessOverlay = false
-      this.displayFailureOverlay = false
-      this.displayStartOverlay = false
-      this.displayPreviewOverlay = true
+      this.displaySuccessOverlay = false;
+      this.displayFailureOverlay = false;
+      this.displayStartOverlay = false;
+      this.displayPreviewOverlay = true;
 
-      this.$store.dispatch('startNewLevel', {
+      this.$store.dispatch("startNewLevel", {
         knobsAvailable: usedParameters,
-        levelNumber: 0
-      })
-      this.$store.commit('setGoalToPreset', {
+        levelNumber: 0,
+        attempts: 0
+      });
+      this.$store.commit("setGoalToPreset", {
         preset: parameters
-      })
-      this.$store.dispatch('randomizeAudioParameters', usedParameters) // and the audio params
-      this.$store.dispatch('setSynthToGoal', audio) // then let the user hear it
+      });
+      this.$store.dispatch("randomizeAudioParameters", usedParameters); // and the audio params
+      this.$store.dispatch("setSynthToGoal", audio); // then let the user hear it
 
-      this.loop.start()
+      this.loop.start();
       // rest will be done by watcher of sequencesPassedInCurrentLevel
     },
-    beginSvoosh () {
-      this.isThereSvooshComponent = true
-      this.$nextTick(() => this.svooshIt = true)
-      this.displayPreviewOverlay = false
+    originalSoundPrompt() {
+      this.displayOriginalSoundOverlay = true; // create this overlay.
+
+      this.timerInterval = setInterval(this.countdown, 1000);
     },
-    endSvoosh () {
+    countdown() {
+        this.timer -= 1;
+        console.log(this.timer);
+        if (this.timer === 0) {
+          this.displayOriginalSoundOverlay = false;
+          this.timer = 8;
+          clearInterval(this.timerInterval);
+        }
+    },
+    beginSvoosh() {
+      this.isThereSvooshComponent = true;
+      this.$nextTick(() => (this.svooshIt = true));
+      this.displayPreviewOverlay = false;
+    },
+    endSvoosh() {
       setTimeout(() => {
-        this.isThereSvooshComponent = false
-        this.svooshIt = false
-        this.$store.commit('armSweep')
-      }, 500)
-      this.endPreview()
+        this.isThereSvooshComponent = false;
+        this.svooshIt = false;
+        this.$store.commit("armSweep");
+      }, 500);
+      this.endPreview();
     },
-    beginSuccessSvoosh () {
-      this.isThereSuccessSvooshComponent = true
-      this.$nextTick(() => this.successSvooshIt = true)
+    beginSuccessSvoosh() {
+      this.isThereSuccessSvooshComponent = true;
+      this.$nextTick(() => (this.successSvooshIt = true));
     },
-    endSuccessSvoosh () {
+    endSuccessSvoosh() {
       setTimeout(() => {
-        this.isThereSuccessSvooshComponent = false
-        this.successSvooshIt = false
-      }, 500)
+        this.isThereSuccessSvooshComponent = false;
+        this.successSvooshIt = false;
+      }, 500);
     },
-    endPreview () {
-      this.$store.commit('startTimerIsRunning')
-      this.$store.dispatch('setSynthToDefaultParameters', audio)
+    endPreview() {
+      this.$store.commit("startTimerIsRunning");
+      this.$store.dispatch("setSynthToDefaultParameters", audio);
     },
-    startNextLevel (level) {
-      this.$store.commit('increaseLevelValue', 1)
-      this.startLevel(this.level) // TODO: should be + 1
+    startNextLevel(level) {
+      this.$store.commit("increaseLevelValue", 1);
+      this.startLevel(this.level); // TODO: should be + 1
     },
-    gameLevel () {
-      return this.$store.state.gameState.level
+    gameLevel() {
+      return this.$store.state.gameState.level;
     },
-    showCreate () {
-      this.showCreatePreview = false
-      this.startCreateMode()
+    showCreate() {
+      this.showCreatePreview = false;
+      this.startCreateMode();
     }
   },
   watch: {
-    attemptMade (val) {
-
-    },
-    allParametersMatchGoal (val) {
-      if (val === true && this.timerIsRunning) {
-        this.beginSuccessSvoosh()
-        this.$store.dispatch('levelDone') // would be nice to pass timeleft here but it is being passed by timer on gamestop
+    attemptMade(val) {
+      if (this.allParametersMatchGoal === true) {
+        this.beginSuccessSvoosh();
+        this.$store.dispatch("levelDone");
+      } else {
+        this.originalSoundPrompt();
       }
     }
+    // allParametersMatchGoal (val) {
+    //   if (val === true && this.timerIsRunning) {
+    //     this.beginSuccessSvoosh()
+    //     this.$store.dispatch('levelDone') // would be nice to pass timeleft here but it is being passed by timer on gamestop
+    //   }
+    // }
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,600,900');
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,600,900");
 
 @font-face {
-    font-family: ledscreen;
-    src: url(./assets/ledscreen.ttf);
+  font-family: ledscreen;
+  src: url(./assets/ledscreen.ttf);
 }
 
 .tabs {
@@ -337,7 +380,7 @@ export default {
     justify-content: center;
     align-items: center;
     width: 20%;
-    border: .5px solid white;
+    border: 0.5px solid white;
     cursor: pointer;
     &:hover {
       background: white;
@@ -352,19 +395,19 @@ export default {
   background: #101010;
   background-image: url(./assets/bg.svg);
   background-size: stretch;
-  width:100vw;
+  width: 100vw;
   height: 92vh;
 }
 
 .empty {
   display: inline-block;
-  height: calc(0.6*92vh);
+  height: calc(0.6 * 92vh);
   width: 16.67em;
   &:nth-of-type(1) {
-    height: calc(0.2*92vh);
+    height: calc(0.2 * 92vh);
   }
   &:nth-of-type(2) {
-    height: calc(0.4*92vh);
+    height: calc(0.4 * 92vh);
   }
 }
 
@@ -390,48 +433,48 @@ export default {
     height: calc(92vh);
   }
   .button-wrapper {
-      display: flex;
-      padding: 0em;
-      width: 85%;
-      margin: 0 0 1em 0;
-      flex-wrap: wrap;
-      justify-content: center;
-      button {
-        width:2.5em;
-        height: 2.5em;
-      }
-      svg{
-        width: 1em;
-      }
+    display: flex;
+    padding: 0em;
+    width: 85%;
+    margin: 0 0 1em 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    button {
+      width: 2.5em;
+      height: 2.5em;
+    }
+    svg {
+      width: 1em;
+    }
     & p {
-       margin: .5em 0 0 0;
-       font-size: .7em;
-       width: 100%;
-       text-transform: uppercase;
-       letter-spacing: 1px;
+      margin: 0.5em 0 0 0;
+      font-size: 0.7em;
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
   }
   &:before {
-    content:'';
+    content: "";
     display: block;
     position: absolute;
     background: #b7b7b7;
-    width: .4em;
-    height: .4em;
+    width: 0.4em;
+    height: 0.4em;
     border-radius: 100%;
-    top: .45em;
-    left: .55em;
+    top: 0.45em;
+    left: 0.55em;
   }
   &:after {
-    content:'';
+    content: "";
     display: block;
     position: absolute;
     background: #b7b7b7;
-    width: .4em;
-    height: .4em;
+    width: 0.4em;
+    height: 0.4em;
     border-radius: 100%;
-    top: .45em;
-    right: .55em;
+    top: 0.45em;
+    right: 0.55em;
   }
   & .display {
     position: relative;
@@ -441,7 +484,7 @@ export default {
     width: 80%;
     margin-left: 10%;
     & path {
-      transition: .1s all ease-out;
+      transition: 0.1s all ease-out;
     }
   }
   & .knobs {
@@ -454,26 +497,26 @@ export default {
     justify-content: center;
     align-items: center;
     &:before {
-      content:'';
+      content: "";
       display: block;
       position: absolute;
       background: #b7b7b7;
-      width: .4em;
-      height: .4em;
+      width: 0.4em;
+      height: 0.4em;
       border-radius: 100%;
-      bottom: .55em;
-      left: .55em;
+      bottom: 0.55em;
+      left: 0.55em;
     }
     &:after {
-      content:'';
+      content: "";
       display: block;
       position: absolute;
       background: #b7b7b7;
-      width: .4em;
-      height: .4em;
+      width: 0.4em;
+      height: 0.4em;
       border-radius: 100%;
-      bottom: .55em;
-      right: .55em;
+      bottom: 0.55em;
+      right: 0.55em;
     }
   }
 }
@@ -485,7 +528,7 @@ body {
 }
 
 #app {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 300;
   font-size: 1vw;
   -webkit-font-smoothing: antialiased;
@@ -504,8 +547,8 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, .90);
-  transition: opacity .3s ease;
+  background-color: rgba(0, 0, 0, 0.9);
+  transition: opacity 0.3s ease;
   fill: none;
   stroke: red;
   stroke-width: 3;
@@ -520,7 +563,7 @@ body {
     max-width: 12em;
     margin: 0;
     & span {
-      font-size: .6em;
+      font-size: 0.6em;
       margin-top: 1.5em;
       line-height: 1.5em;
       max-width: 20em;
@@ -539,23 +582,23 @@ body {
 }
 
 .button-next {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 1em;
-    color: inherit;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-    padding: .8rem 1.4rem;
-    border: none;
-    margin: 5px;
-    background: none;
-    border: 1px solid #ff8574;
-    transition: all .2s;
-    &:hover {
-      background: #ff8574;
-    }
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1em;
+  color: inherit;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  padding: 0.8rem 1.4rem;
+  border: none;
+  margin: 5px;
+  background: none;
+  border: 1px solid #ff8574;
+  transition: all 0.2s;
+  &:hover {
+    background: #ff8574;
+  }
 }
 
 * {
@@ -563,8 +606,12 @@ body {
 }
 
 @keyframes blink {
-    from {opacity: 0}
-    to {opacity: 1}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 #nav {
@@ -583,50 +630,50 @@ body {
 * the way the start screen goes away:
 */
 .slideout-leave-active {
-  animation: slideout 1s
+  animation: slideout 1s;
 }
 
 /* ...and the preview screen enters: */
 .slide-up-slide-down-enter-active {
-  animation: slidein 1s
+  animation: slidein 1s;
 }
 
 /* and the way it disappears after a black svoosh */
 .slide-up-slide-down-leave-active {
-  animation: slidedown 900ms ease-in 0.3s
+  animation: slidedown 900ms ease-in 0.3s;
 }
 
 /* these animations, defined in keyframes: */
 @keyframes slideout {
   0% {
-  transform: translateY(0);
+    transform: translateY(0);
   }
   100% {
-  transform: translateY(-100%)
+    transform: translateY(-100%);
   }
 }
 
 @keyframes slidein {
   0% {
-  transform: translateY(100%);
+    transform: translateY(100%);
   }
   100% {
-  transform: translateY(0)
+    transform: translateY(0);
   }
 }
 
 @keyframes slidedown {
   0% {
-  transform: translateY(0);
+    transform: translateY(0);
   }
   100% {
-  transform: translateY(100%)
+    transform: translateY(100%);
   }
 }
 
 @media only screen and (max-width: 1000px) {
   #app {
-    font-size: .8em;
+    font-size: 0.8em;
   }
   .level {
     height: 82vh !important;
@@ -635,7 +682,7 @@ body {
     display: flex;
     &__tab {
       flex-direction: column;
-      height:100%;
+      height: 100%;
       padding: 2vh 0;
       justify-content: space-around;
     }
@@ -649,14 +696,14 @@ body {
   .module .knobs {
     padding-top: 5vh;
     min-height: 55vh;
-}
-.module .button-wrapper button {
+  }
+  .module .button-wrapper button {
     width: 4.5em;
     height: 4.5em;
-}
-.module .button-wrapper p {
+  }
+  .module .button-wrapper p {
     font-size: 1.2em;
-}
+  }
   .module.active {
     left: 0;
     opacity: 1;

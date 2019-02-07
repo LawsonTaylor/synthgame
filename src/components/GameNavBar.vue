@@ -111,7 +111,6 @@ export default {
   data: function () {
     return {
       timeLeftSeconds: 30,
-      attemptsRemaining: 10,
       timer: null,
       indicatorActive: true,
       exportPresetName: '',
@@ -170,26 +169,20 @@ export default {
     paddedHighScoreString () {
       return `${padStart(this.highScore, 5, '0')}`
     },
+    attemptsRemaining () {
+      return this.$store.state.gameState.attemptsRemaining;
+    },
   },
   methods: {
     makeAttempt () {
-      console.log('make attempt')
-      this.attemptsRemaining -= 1;
-
       //check result
         // if valid submit score, pass level 
+      this.$store.dispatch('makeAttempt');
 
-      // const paramsMatch = this.$store.getters.allParametersMatchGoal;
-      this.$store.commit('toggleAttempt');
-
-  
       if(this.attemptsRemaining === 0){
         this.$store.dispatch('gameOver');
         //reset counter
-        this.attemptsRemaining = 10;
       } 
-      
-      this.$store.commit('toggleAttempt');
     },
 
     // startTimer () {
@@ -222,7 +215,7 @@ export default {
     },
     submitPreset () {
       this.showAfterCreateOverlay = true
-      this.$store.dispatch('exportPreset', {name: this.exportPresetName})
+      this.$store.dispatch('exportPreset', { name: this.exportPresetName } )
         .then(presetId => {
           alert(`${window.location.origin}/?preset=${presetId}`)
           this.exportPresetLink = `${window.location.origin}/?preset=${presetId}`
