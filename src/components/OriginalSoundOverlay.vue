@@ -2,10 +2,10 @@
   <div class="overlay">
     <div class="overlay-content-wrapper">
       <div>
-        <h2>Listen to the original audio</h2>
-        <h2>You have {{ attemptsRemaining }} attempts remaining...</h2>
+        <h3>Listen to the original audio</h3>
+        <h4>You have {{ attemptsRemaining }} attempts remaining...</h4>
         <h1>Try again</h1>
-        <span>{{ timer }}</span>
+        <span class="timer-text">{{ timer }}</span>
       </div>
       <svg viewBox="0 0 250 250" height="400px" width="400px">
         <g :transform="`rotate(${anim.ping.racketTurn}) translate(0, ${anim.ping.racketYOffset})`">
@@ -58,7 +58,7 @@ export default {
       },
       colorArray: [],
       currentColor: '',
-      attemptsRemaining: this.$store.state.attemptsRemaining,
+      attemptsRemaining: this.$store.state.gameState.attemptsRemaining,
     }
   },
   created () {
@@ -188,4 +188,8 @@ export default {
 //   50% { transform: rotate(20deg) }
 //   100% { transform: rotate(100%) }
 // }
+
+  .timer-text {
+    font-size: 1.3em;
+  }
 </style>

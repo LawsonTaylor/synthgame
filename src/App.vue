@@ -185,6 +185,9 @@ export default {
       audio.start();
       // start loop
       //
+      addEventListener('keydown', (e) => {
+        console.log(e);
+      }) 
     },
     initM() {
       navigator.requestMIDIAccess().then(
@@ -289,6 +292,11 @@ export default {
       this.displayOriginalSoundOverlay = true; // create this overlay.
 
       this.timerInterval = setInterval(this.countdown, 1000);
+    },
+    killOrignalSoundPrompt() {
+      this.displayOriginalSoundOverlay = false;
+      clearInterval(this.timerInterval);
+      this.timer = 8;
     },
     countdown() {
         this.timer -= 1;
