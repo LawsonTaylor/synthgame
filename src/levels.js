@@ -1,9 +1,8 @@
-// call me Pieter
 export default [
-  // level 1 - 3 typeOsc
   // level 1
   {
     oscillator1: {
+<<<<<<< HEAD
       detune: true
     },
     oscillator2: {},
@@ -197,28 +196,36 @@ export default [
     oscillator1: {
       detune: true,
       frequency: true,
+=======
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
       typeOsc: true
     },
     oscillator2: {},
     filter: {},
     envelope: {},
+    envelope2: {},
     lfo: {},
+<<<<<<< HEAD
     attempts: 12,
+=======
+    router: {},
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
     levelData: {
-      text: 'Enjoy this easy level, it will get trickier soon.'
+      text: "Use the white guidelines to recreate this sound in 60 seconds."
     }
   },
-  // level 15
+  // level 2
   {
     oscillator1: {
-      detune: true,
       frequency: true,
       typeOsc: true
     },
     oscillator2: {},
     filter: {},
     envelope: {},
+    envelope2: {},
     lfo: {},
+<<<<<<< HEAD
     attempts: 12,
     levelData: {
       text: 'Wonder why the sound is thin, compared to what you hear in most music?'
@@ -966,161 +973,291 @@ export default [
     attempts: 12,
     levelData: {
       text: 'Adjust the frequency, and hear the pitch go up and down at different speeds.'
-    }
-  },
-  // level 61
-  {
-    oscillator1: {},
-    oscillator2: {},
-    filter: {},
-    envelope: {},
-    lfo: {
-      amount: true,
-      frequency: true
-    },
-    attempts: 12,
+=======
+    router: {},
     levelData: {
-      text: 'Right now, we use a sinewave, which eases the effect LFO has on the pitch.'
+      text:
+        "The oscillator is the source of electronic sound. Use the knobs and dials to shape the outputted signal. "
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
     }
   },
-  // level 62
-  {
-    oscillator1: {},
-    oscillator2: {},
-    filter: {},
-    envelope: {},
-    lfo: {
-      amount: true,
-      frequency: true
-    },
-    attempts: 12,
-    levelData: {
-      text: 'But we can use other waveforms, too, just like regular oscillators.'
-    }
-  },
-  // level 63
-  {
-    oscillator1: {},
-    oscillator2: {},
-    filter: {},
-    envelope: {},
-    lfo: {
-      amount: true,
-      type: true
-    },
-    attempts: 12,
-    levelData: {
-      text: 'Now, try some other waveforms.'
-    }
-  },
-  // level 64
-  {
-    oscillator1: {},
-    oscillator2: {},
-    filter: {},
-    envelope: {},
-    lfo: {
-      amount: true,
-      type: true
-    },
-    attempts: 12,
-    levelData: {
-      text: 'Use square to get that glitch sound.'
-    }
-  },
-  // level 65
-  {
-    oscillator1: {},
-    oscillator2: {},
-    filter: {},
-    envelope: {},
-    lfo: {
-      amount: true,
-      frequency: true,
-      type: true
-    },
-    attempts: 12,
-    levelData: {
-      text: 'Now, play around with all the LFO controls.'
-    }
-  },
-  // level 66
+  // level 3
   {
     oscillator1: {
+      typeOsc: true,
+      frequency: true,
+      detune: true
+    },
+    oscillator2: {},
+    filter: {},
+    envelope: {},
+<<<<<<< HEAD
+    lfo: {
+      amount: true,
+      frequency: true
+    },
+    attempts: 12,
+=======
+    envelope2: {},
+    lfo: {},
+    router: {},
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
+    levelData: {
+      text: "Both detune and octave control the pitch."
+    }
+  },
+  // level 4
+  {
+    oscillator1: {
+      typeOsc: true,
+      frequency: true,
+      detune: true
+    },
+    oscillator2: {
+      typeOsc: true
+    },
+    filter: {},
+    envelope: {},
+<<<<<<< HEAD
+    lfo: {
+      amount: true,
+      frequency: true
+    },
+    attempts: 12,
+=======
+    envelope2: {},
+    lfo: {},
+    router: {},
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
+    levelData: {
+      text: "You unlocked the second oscillator!"
+    }
+  },
+  // level 5
+  {
+    oscillator1: {
+      detune: true,
+      frequency: true,
       typeOsc: true
     },
     oscillator2: {
-      detune: true
+      typeOsc: true,
+      frequency: true
+    },
+    filter: {},
+    envelope: {},
+<<<<<<< HEAD
+    lfo: {
+      amount: true,
+      type: true
+    },
+    attempts: 12,
+=======
+    envelope2: {},
+    lfo: {},
+    router: {},
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
+    levelData: {
+      text:
+        "Use detune on Osc 1 to detune the oscillators, resulting in a fatter sound."
+    }
+  },
+  // level 6
+  {
+    oscillator1: {
+      detune: true,
+      frequency: true,
+      typeOsc: true
+    },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
+    filter: {},
+    envelope: {},
+<<<<<<< HEAD
+    lfo: {
+      amount: true,
+      type: true
+    },
+    attempts: 12,
+=======
+    envelope2: {},
+    lfo: {},
+    router: {},
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
+    levelData: {
+      text: "Use volume on Osc 2 to alter the mix between the oscillators."
+    }
+  },
+  // level 7
+  {
+    oscillator1: {
+      detune: true,
+      frequency: true,
+      typeOsc: true
+    },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
     },
     filter: {
+      type: true
+    },
+<<<<<<< HEAD
+    attempts: 12,
+=======
+    envelope: {},
+    envelope2: {},
+    lfo: {},
+    router: {},
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
+    levelData: {
+      text: "You unlocked the filter!"
+    }
+  },
+  // level 8
+  {
+    oscillator1: {
+      detune: true,
+      frequency: true,
+      typeOsc: true
+    },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
+    filter: {
+      type: true,
       cutOffFreq: true
     },
     envelope: {},
+<<<<<<< HEAD
     lfo: {
     },
     attempts: 12,
+=======
+    envelope2: {},
+    lfo: {},
+    router: {},
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
     levelData: {
-      text: 'You did it! You mastered the basics of subtractive synthesis.'
+      text:
+        "The cutoff frequency control sets the range of the sound passed through the filter."
     }
   },
-  // level 67
+  // level 9
   {
     oscillator1: {
-      detune: true,
-      frequency: true
-    },
-    oscillator2: {
-      detune: true,
-      typeOsc: true
-    },
-    filter: {
-      type: true
-    },
-    envelope: {},
-    lfo: {
-    },
-    attempts: 12,
-    levelData: {
-      text: 'Now the real fun starts.'
-    }
-  },
-  // level 68
-  {
-    oscillator1: {
-      detune: true,
-      typeOsc: true
-    },
-    oscillator2: {
-      detune: true,
-      frequency: true
-    },
-    filter: {
-      type: true
-    },
-    envelope: {},
-    lfo: {
-    },
-    attempts: 12,
-    levelData: {
-      text: 'At this point, you might be wondering if there is even an end to this game.'
-    }
-  },
-  // level 69
-  {
-    oscillator1: {
-      detune: true,
-      typeOsc: true,
-      frequency: true
-    },
-    oscillator2: {
       detune: true,
       frequency: true,
       typeOsc: true
     },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
     filter: {
       type: true,
-      cutOffFreq: true,
-      setQ: true
+      cutOffFreq: true
+    },
+    envelope: {
+      attack: true
+    },
+<<<<<<< HEAD
+    attempts: 12,
+=======
+    envelope2: {},
+    lfo: {},
+    router: {},
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
+    levelData: {
+      text: "You unlocked the Amplifier Envelope!"
+    }
+  },
+  // level 10
+  {
+    oscillator1: {
+      detune: true,
+      frequency: true,
+      typeOsc: true
+    },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
+    filter: {
+      type: true,
+      cutOffFreq: true
+    },
+    envelope: {
+      attack: true,
+      decay: true
+    },
+<<<<<<< HEAD
+    attempts: 12,
+=======
+    envelope2: {},
+    lfo: {},
+    router: {},
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
+    levelData: {
+      text: "Every time a note is played, the envelope is triggered."
+    }
+  },
+  // level 11
+  {
+    oscillator1: {
+      detune: true,
+      frequency: true,
+      typeOsc: true
+    },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
+    filter: {
+      type: true,
+      cutOffFreq: true
+    },
+    envelope: {
+      attack: true,
+      decay: true,
+      sustain: true
+    },
+<<<<<<< HEAD
+    attempts: 12,
+=======
+    envelope2: {},
+    lfo: {},
+    router: {},
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
+    levelData: {
+      text:
+        "Use attack, decay, sustain and release to decide on the volume of the note over time."
+    }
+  },
+  // level 12
+  {
+    oscillator1: {
+      detune: true,
+      frequency: true,
+      typeOsc: true
+    },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
+    filter: {
+      type: true,
+      cutOffFreq: true
     },
     envelope: {
       attack: true,
@@ -1128,32 +1265,124 @@ export default [
       sustain: true,
       release: true
     },
-    lfo: {
-      frequency: true,
-      amount: true,
-      type: true
-    },
-    attempts: 12,
+    envelope2: {},
+    lfo: {},
+    router: {},
     levelData: {
-      text: 'Just like subtractive synthesis, there is no end to this game.'
+      text: "Hint: set attack and decay to low levels for snappy sounds."
     }
   },
-  // level 70
+  // // level 13
+  // {
+  //   oscillator1: {
+  //     detune: true,
+  //     frequency: true,
+  //     typeOsc: true
+  //   },
+  //   oscillator2: {
+  //     typeOsc: true,
+  //     frequency: true,
+  //     volume: true
+  //   },
+  //   filter: {
+  //     type: true,
+  //     cutOffFreq: true
+  //   },
+  //   envelope: {
+  //     attack: true,
+  //     decay: true,
+  //     sustain: true,
+  //     release: true
+  //   },
+  //   envelope2: {},
+  //   lfo: {
+  //     amount: true
+  //   },
+  //   router: {},
+  //   levelData: {
+  //     text: 'You unlocked the LFO!'
+  //   }
+  // },
+  // // level 14
+  // {
+  //   oscillator1: {
+  //     detune: true,
+  //     frequency: true,
+  //     typeOsc: true
+  //   },
+  //   oscillator2: {
+  //     typeOsc: true,
+  //     frequency: true,
+  //     volume: true
+  //   },
+  //   filter: {
+  //     type: true,
+  //     cutOffFreq: true
+  //   },
+  //   envelope: {
+  //     attack: true,
+  //     decay: true,
+  //     sustain: true,
+  //     release: true
+  //   },
+  //   envelope2: {},
+  //   lfo: {
+  //     amount: true,
+  //     frequency: true
+  //   },
+  //   router: {},
+  //   levelData: {
+  //     text: 'LFO stands for low frequency oscillator. It produces an output signal which can modulate other controls.'
+  //   }
+  // },
+  // // level 15
+  // {
+  //   oscillator1: {
+  //     detune: true,
+  //     frequency: true,
+  //     typeOsc: true
+  //   },
+  //   oscillator2: {
+  //     typeOsc: true,
+  //     frequency: true,
+  //     volume: true
+  //   },
+  //   filter: {
+  //     type: true,
+  //     cutOffFreq: true
+  //   },
+  //   envelope: {
+  //     attack: true,
+  //     decay: true,
+  //     sustain: true,
+  //     release: true
+  //   },
+  //   envelope2: {},
+  //   lfo: {
+  //     amount: true,
+  //     frequency: true,
+  //     type: true
+  //   },
+  //   router: {},
+  //   levelData: {
+  //     text: "Low frequency oscillators can bring life to otherwise static sounds."
+  //   }
+  // },
+  // level 16
   {
     oscillator1: {
-      detune: true,
-      typeOsc: true,
-      frequency: true
-    },
-    oscillator2: {
       detune: true,
       frequency: true,
       typeOsc: true
     },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
     filter: {
       type: true,
-      cutOffFreq: true,
-      setQ: true
+      cutOffFreq: true
     },
     envelope: {
       attack: true,
@@ -1161,35 +1390,51 @@ export default [
       sustain: true,
       release: true
     },
-    lfo: {
-      frequency: true,
-      amount: true,
-      type: true
+    envelope2: {
+      attack: true
     },
+    lfo: {
+      // amount: true,
+      // frequency: true,
+      // type: true
+    },
+<<<<<<< HEAD
     attempts: 12,
+=======
+    router: {},
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
     levelData: {
-      text: "Thank you for playing. You're on your own now."
+      text: "You unlocked the Modulation Envelope!"
     }
   },
-  // level 71
+  // level 17
   {
     oscillator1: {
-      detune: true,
-      typeOsc: true,
-      frequency: true
-    },
-    oscillator2: {
       detune: true,
       frequency: true,
       typeOsc: true
     },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
     filter: {
-      type: true
+      type: true,
+      cutOffFreq: true
     },
     envelope: {
+      attack: true,
+      decay: true,
+      sustain: true,
+      release: true
+    },
+    envelope2: {
+      attack: true,
       decay: true
     },
     lfo: {
+<<<<<<< HEAD
       amount: true
     },
     attempts: 12,
@@ -1198,103 +1443,101 @@ export default [
     }
   },
   // level 72
+=======
+      // amount: true,
+      // frequency: true,
+      // type: true
+    },
+    router: {},
+    levelData: {
+      text: "We use modulation envelope to modulate another synth control."
+    }
+  },
+  // // level 18
+  // {
+  //   oscillator1: {
+  //     detune: true,
+  //     frequency: true,
+  //     typeOsc: true
+  //   },
+  //   oscillator2: {
+  //     typeOsc: true,
+  //     frequency: true,
+  //     volume: true
+  //   },
+  //   filter: {
+  //     type: true,
+  //     cutOffFreq: true
+  //   },
+  //   envelope: {
+  //     attack: true,
+  //     decay: true,
+  //     sustain: true,
+  //     release: true
+  //   },
+  //   envelope2: {
+  //     attack: true,
+  //     decay: true,
+  //     sustain: true
+  //   },
+  //   lfo: {
+  //     amount: true,
+  //     frequency: true,
+  //     type: true
+  //   },
+  //   router: {},
+  //   levelData: {
+  //     text: 'With both an lfo and an mod envelope the world is your oyster.'
+  //   }
+  // },
+  // level 19
+  // {
+  //   oscillator1: {
+  //     detune: true,
+  //     frequency: true,
+  //     typeOsc: true
+  //   },
+  //   oscillator2: {
+  //     typeOsc: true,
+  //     frequency: true,
+  //     volume: true
+  //   },
+  //   filter: {
+  //     type: true,
+  //     cutOffFreq: true
+  //   },
+  //   envelope: {
+  //     attack: true,
+  //     decay: true,
+  //     sustain: true,
+  //     release: true
+  //   },
+  //   envelope2: {
+  //     attack: true,
+  //     release: true
+  //   },
+  //   lfo: {
+  //     amount: true,
+  //     frequency: true,
+  //     type: true
+  //   },
+  //   router: {},
+  //   levelData: {
+  //     text: "We're impressed."
+  //   }
+  // },
+  // level 20
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
   {
     oscillator1: {
-      detune: true,
-      frequency: true
-    },
-    oscillator2: {
       detune: true,
       frequency: true,
       typeOsc: true
     },
-    filter: {
-      type: true,
-      cutOffFreq: true,
-      setQ: true
-    },
-    envelope: {
-      attack: true,
-      release: true
-    },
-    lfo: {
-    },
-    attempts: 12,
-    levelData: {
-      text: 'This is unreal. You must be a famous producer.'
-    }
-  },
-  // level 73
-  {
-    oscillator1: {
-      detune: true,
+    oscillator2: {
       typeOsc: true,
-      frequency: true
-    },
-    oscillator2: {
-      detune: true,
       frequency: true,
-      typeOsc: true
-    },
-    filter: {
-      type: true,
-      cutOffFreq: true,
-      setQ: true
-    },
-    envelope: {
-      attack: true,
-      decay: true,
-      sustain: true,
-      release: true
-    },
-    lfo: {
-      amount: true
-    },
-    attempts: 12,
-    levelData: {
-      text: "Well, if so, why don't you teach us?"
-    }
-  },
-  // level 74
-  {
-    oscillator1: {
-      detune: true,
-      frequency: true
-    },
-    oscillator2: {
-      detune: true
-    },
-    filter: {
-      type: true,
-      cutOffFreq: true,
-      setQ: true
-    },
-    envelope: {
-      attack: true,
-      decay: true,
-      sustain: true,
-      release: true
-    },
-    lfo: {
-      frequency: true,
-      amount: true
-    },
-    attempts: 12,
-    levelData: {
-      text: 'Shoot an email to bart@okbye.io'
-    }
-  },
-  // level 75
-  {
-    oscillator1: {
-      detune: true,
-      typeOsc: true,
-      frequency: true
-    },
-    oscillator2: {
-      detune: true,
-      frequency: true,
-      typeOsc: true
+      volume: true
     },
     filter: {
       type: true,
@@ -1303,33 +1546,41 @@ export default [
     envelope: {
       attack: true,
       decay: true,
+      sustain: true,
       release: true
     },
+    envelope2: {
+      attack: true,
+      decay: true
+    },
     lfo: {
-      amount: true,
-      type: true
+      // amount: true,
+      // frequency: true,
+      // type: true
+    },
+    router: {
+      lfo: true
     },
     attempts: 12,
     levelData: {
-      text: 'We need people like you.'
+      text: "You must be a famous producer already."
     }
   },
-  // level 76
+  // level 21
   {
     oscillator1: {
-      detune: true,
-      typeOsc: true,
-      frequency: true
-    },
-    oscillator2: {
       detune: true,
       frequency: true,
       typeOsc: true
     },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
     filter: {
       type: true,
-      cutOffFreq: true,
-      setQ: true
+      cutOffFreq: true
     },
     envelope: {
       attack: true,
@@ -1337,14 +1588,150 @@ export default [
       sustain: true,
       release: true
     },
+    envelope2: {
+      attack: true,
+      decay: true
+    },
     lfo: {
-      frequency: true,
-      amount: true,
-      type: true
+      // amount: true,
+      // frequency: true,
+      // type: true
+    },
+    router: {
+      lfo: true,
+      envelope2: true
     },
     attempts: 12,
     levelData: {
-      text: 'Ok Bye'
+      text: "The router routes the LFO and MOD ENV to different controls."
+    }
+  },
+  // level 21
+  {
+    oscillator1: {
+      detune: true,
+      frequency: true,
+      typeOsc: true
+    },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
+    filter: {
+      type: true,
+      cutOffFreq: true
+    },
+    envelope: {
+      attack: true,
+      decay: true,
+      sustain: true,
+      release: true
+    },
+    envelope2: {
+      attack: true,
+      decay: true
+    },
+    lfo: {
+      amount: true
+      // frequency: true,
+      // type: true
+    },
+    router: {
+      lfo: true,
+      envelope2: true
+    },
+    attempts: 12,
+    levelData: {
+      text: "You unlocked the LFO!"
+    }
+  },
+  // level 21
+  {
+    oscillator1: {
+      detune: true,
+      frequency: true,
+      typeOsc: true
+    },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
+    filter: {
+      type: true,
+      cutOffFreq: true
+    },
+    envelope: {
+      attack: true,
+      decay: true,
+      sustain: true,
+      release: true
+    },
+    envelope2: {
+      attack: true,
+      decay: true
+    },
+    lfo: {
+      amount: true,
+      // frequency: true,
+      type: true
+    },
+<<<<<<< HEAD
+    attempts: 12,
+=======
+    router: {
+      lfo: true,
+      envelope2: true
+    },
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
+    levelData: {
+      text:
+        "LFO stands for low frequency oscillator. It produces an output signal which can modulate other controls."
+    }
+  },
+  // level 21
+  {
+    oscillator1: {
+      detune: true,
+      frequency: true,
+      typeOsc: true
+    },
+    oscillator2: {
+      typeOsc: true,
+      frequency: true,
+      volume: true
+    },
+    filter: {
+      type: true,
+      cutOffFreq: true
+    },
+    envelope: {
+      attack: true,
+      decay: true,
+      sustain: true,
+      release: true
+    },
+    envelope2: {
+      attack: true,
+      decay: true
+    },
+    lfo: {
+      amount: true,
+      frequency: true,
+      type: true
+    },
+<<<<<<< HEAD
+    attempts: 12,
+=======
+    router: {
+      lfo: true,
+      envelope2: true
+    },
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
+    levelData: {
+      text:
+        "Congratulations! You're an electronic music producer. Make the music for one of the levels, or keep playing the game and break the highscore: level 135."
     }
   }
-]
+];

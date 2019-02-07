@@ -1,5 +1,20 @@
 <template>
-  <button @click="$emit('click', $event)" class="sequencer-button">
+  <!-- button with mouseover listener -->
+  <!-- <button
+  @mousedown="$emit('click', $event)"
+  @mouseover="toggleOnOff($event)"
+  class="sequencer-button">
+    <div class="sequencer-button__content">
+      <div :class="{
+        'sequencer-button__indicator': true,
+        'sequencer-button__indicator--active': buttonActive,
+        'sequencer-button__indicator--selected': buttonSelected
+      }"></div>
+    </div>
+  </button> -->
+  <button
+  @mousedown="$emit('click', $event)"
+  class="sequencer-button">
     <div class="sequencer-button__content">
       <div :class="{
         'sequencer-button__indicator': true,
@@ -11,6 +26,14 @@
 </template>
 
 <script>
+// let mouseIsDown = 0;
+// document.body.onmousedown = function() {
+//   mouseIsDown = mouseIsDown + 1;
+// }
+// document.body.onmouseup = function() {
+//   mouseIsDown = mouseIsDown - 1;
+// }
+
 export default {
   name: 'SequencerButton',
   props: {
@@ -28,6 +51,11 @@ export default {
     }
   },
   methods: {
+    toggleOnOff (e) {
+      if (mouseIsDown > 0) {
+        this.$emit('click', e)
+      }
+    }
   }
 }
 </script>
@@ -38,7 +66,7 @@ $main-seq-color: #F40056;
 
 .sequencer-button {
   height: 8em;
-  width: 3em;
+  width: 100%;
   display: flex;
   margin: 10px 5px;
   padding: 0;
@@ -48,7 +76,7 @@ $main-seq-color: #F40056;
 
   &__content {
     width: 100%;
-    margin-top: -3em;
+    margin-top: -3.6em;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

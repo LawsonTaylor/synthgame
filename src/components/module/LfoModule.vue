@@ -1,9 +1,9 @@
   <template>
     <div class="module">
       <module-title :indicator-active="dialsAreWithinMargin" :module-color="moduleColor">
-        <h2 slot="title">Tats</h2>
+        <!-- <h2 slot="title">Tats</h2> -->
         <h3 v-if="dialsAreWithinMargin" slot="subtitle">Done!</h3>
-        <h3 v-else slot="subtitle">Lfo</h3>
+        <h3 v-else slot="subtitle">Mod Lfo</h3>
       </module-title>
         <module-display
           class="display"
@@ -25,7 +25,7 @@
             :min="1"
             :max="100"
             knobColor="#5bd484"
-            name="Rate"
+            name="Speed"
             module="lfo"
           ></module-knob>
           <module-knob
@@ -34,7 +34,7 @@
             :min="0"
             :max="100"
             knobColor="#5bd484"
-            name="Amount"
+            name="Height"
             module="lfo"
           ></module-knob>
       <div class="button-wrapper"
@@ -44,7 +44,7 @@
         <module-button color="#5bd484" shape="square" :isPressed="type==='square'" @click.native="type='square'"/>
         <module-button color="#5bd484" shape="sawtooth" :isPressed="type==='sawtooth'" @click.native="type='sawtooth'"/>
         <module-button color="#5bd484" shape="triangle" :isPressed="type==='triangle'" @click.native="type='triangle'"/>
-        <p>WAVEFORM</p>
+        <p>MOVEMENT</p>
       </div>
         </div>
     </div>
@@ -107,7 +107,13 @@ export default {
       self.realFrq = character.lfo.frequency(val)
     }),
     ...vuexSyncGen('lfo', 'amount', val => {
-      self.lfo.max = character.lfo.amount(val)
+      if (self.$store.state.audioParameters.router.lfo === 'filterCutoff') {
+        self.lfo.max = character.filter.cutOffFreq(self.$store.state.audioParameters.filter.cutOffFreq) * (1 + val/100);
+        self.lfo.min = character.filter.cutOffFreq(self.$store.state.audioParameters.filter.cutOffFreq) - (character.filter.cutOffFreq(self.$store.state.audioParameters.filter.cutOffFreq) * (val/100));
+      } else {
+        self.lfo.max = character.lfo.amount(val) //TEMP disabled. mounting min and max manually from connected device
+        self.lfo.min = character.lfo.amount(val) * -1
+      }
     }),
     ...vuexSyncGen('lfo', 'type', val => {
       if (self.lfo.type === character.lfo.type(val)) return

@@ -1,9 +1,9 @@
 <template>
   <div class="module">
     <module-title :indicator-active="dialsAreWithinMargin" :module-color="moduleColor">
-      <h2 slot="title">Tats</h2>
+      <!-- <h2 slot="title">Tats</h2> -->
       <h3 v-if="dialsAreWithinMargin" slot="subtitle">Done!</h3>
-      <h3 v-else slot="subtitle">Envelope</h3>
+      <h3 v-else slot="subtitle">Amp Env</h3>
     </module-title>
     <module-display
       fill="#e4e259"
@@ -15,7 +15,9 @@
                 {name: 'attackGoal', min: 1, max: 100, value: this.attackGoal},
                 {name: 'decayGoal', min: 1, max: 100, value: this.decayGoal},
                 {name: 'sustainGoal', min: 1, max: 100, value: this.sustainGoal},
-                {name: 'releasevGoal', min: 1, max: 100, value: this.releaseGoal}
+                {name: 'releasevGoal', min: 1, max: 100, value: this.releaseGoal},
+                {name: 'amount', min: 1, max: 100, value: 100},
+                {name: 'amountGoal', min: 1, max: 100, value: 100},
                 ]"/>
     <div class="knobs">
       <module-knob
@@ -119,7 +121,7 @@ export default {
       self.envelope.decay = character.envelope.decay(val || 1)
     }),
     ...vuexSyncGen('envelope', 'sustain', val => {
-      self.envelope.sustain = character.envelope.sustain(val || 1)
+      self.envelope.sustain = character.envelope.sustain(val || 0)
     }),
     ...vuexSyncGen('envelope', 'release', val => {
       self.envelope.release = character.envelope.release(val || 1)

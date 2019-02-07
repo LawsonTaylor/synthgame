@@ -124,8 +124,18 @@
         <span>High score</span>
         <span class="data">{{paddedHighScoreString}}</span>
       </div>
-
-      <button class="button-next" ref="button" @click="startAgain">TRY AGAIN</button>
+      <!-- <div class="makemusic">
+        <span>Make the music for this game and win a trip to Mess foundation!</span>
+      </div> -->
+      <div class="">
+        <button class="button-next"
+                @click="startLastLevel"
+                >TRY LAST LEVEL AGAIN</button>
+        <button class="button-next"
+                ref="button"
+                @click="startAgain"
+                >BACK TO MENU</button>
+      </div>
     </div>
   </div>
 </template>
@@ -210,27 +220,27 @@ export default {
   mounted() {
     let conf = {
       values: [
-        {
-          stick1: -20,
-          stick1Offset: 0,
-          stick2: 20,
-          stick2AdditionalTwirl: 0,
-          changedTransitionOrigin: 0
-        },
-        {
-          stick1: 0,
-          stick1Offset: 0,
-          stick2: 0,
-          stick2AdditionalTwirl: 0,
-          changedTransitionOrigin: 0
-        },
-        {
-          stick1: -25,
-          stick1Offset: 0,
-          stick2: 0,
-          stick2AdditionalTwirl: 0,
-          changedTransitionOrigin: 0
-        },
+        // {
+        //   stick1: -20,
+        //   stick1Offset: 0,
+        //   stick2: 20,
+        //   stick2AdditionalTwirl: 0,
+        //   changedTransitionOrigin: 0
+        // },
+        // {
+        //   stick1: 0,
+        //   stick1Offset: 0,
+        //   stick2: 0,
+        //   stick2AdditionalTwirl: 0,
+        //   changedTransitionOrigin: 0
+        // },
+        // {
+        //   stick1: -25,
+        //   stick1Offset: 0,
+        //   stick2: 0,
+        //   stick2AdditionalTwirl: 0,
+        //   changedTransitionOrigin: 0
+        // },
         {
           stick1: 0,
           stick1Offset: 0,
@@ -297,6 +307,13 @@ export default {
     },
     startAgain() {
       this.$emit("startagain");
+<<<<<<< HEAD
+=======
+    },
+    startLastLevel() {
+      this.$emit("startlastlevel");
+      console.log("startlastlevel in failure method triggered");
+>>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
     }
   },
   computed: {
@@ -343,6 +360,12 @@ export default {
     font-size: 2em;
     flex-direction: column;
     width: 8em;
+  }
+  .makemusic {
+    display: flex;
+    font-size: 2em;
+    flex-direction: column;
+    width: 11em;
   }
   & span {
     font-size: 0.7em;
