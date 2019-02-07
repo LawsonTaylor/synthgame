@@ -66,7 +66,7 @@
       'color': timeLeftSeconds < 5 ? oscillatorColor : '',
     }" v-if="timerIsRunning === true && createModeIsActive === false" class="timer">{{paddedTimeLeftString}}</span> -->
 
-    <span>
+    <span v-if="gameMode">
       <button class="button-next" @click="makeAttempt">Attemps Remaning: <span>{{attemptsRemaining}}</span></button>
     </span>
 
@@ -172,6 +172,9 @@ export default {
     attemptsRemaining () {
       return this.$store.state.gameState.attemptsRemaining;
     },
+    gameMode() {
+      return !this.$store.state.gameState.createModeIsActive;
+    }
   },
   methods: {
     makeAttempt () {

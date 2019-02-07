@@ -75,7 +75,7 @@ export default {
       customLevelSequence: [],
       showCreatePreview: false,
       timer: 8,
-      timerInterval: 0,
+      timerInterval: 0
     };
   },
   components: {
@@ -121,7 +121,7 @@ export default {
     }),
     isGameOver() {
       return this.$store.state.gameState.isGameOver;
-    }
+    },
   },
   methods: {
     init() {
@@ -185,9 +185,11 @@ export default {
       audio.start();
       // start loop
       //
-      addEventListener('keydown', (e) => {
-        console.log(e);
-      }) 
+      addEventListener("keydown", e => {
+        if (e.keyCode === 27 && this.timerInterval == 0) {
+          this.killOrignalSoundPrompt();
+        }
+      });
     },
     initM() {
       navigator.requestMIDIAccess().then(
@@ -262,8 +264,7 @@ export default {
       // rest will be done by watcher of sequencesPassedInCurrentLevel
     },
     startPreset(parameters) {
-      // eslint-disable-next-line
-      console.log(parameters);
+
       const usedParameters = mapValues(parameters, audioModule =>
         mapValues(audioModule, parameter => !!parameter)
       );
@@ -299,13 +300,11 @@ export default {
       this.timer = 8;
     },
     countdown() {
-        this.timer -= 1;
-        console.log(this.timer);
-        if (this.timer === 0) {
-          this.displayOriginalSoundOverlay = false;
-          this.timer = 8;
-          clearInterval(this.timerInterval);
-        }
+      this.timer -= 1;
+      console.log(this.timer);
+      if (this.timer === 0) {
+        this.killOrignalSoundPrompt();
+      }
     },
     beginSvoosh() {
       this.isThereSvooshComponent = true;
