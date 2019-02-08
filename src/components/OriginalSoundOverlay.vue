@@ -3,7 +3,7 @@
     <div class="overlay-content-wrapper">
       <div>
         <h3>Listen to the original audio</h3>
-        <h4>You have {{ attemptsRemaining }} attempts remaining...</h4>
+        <h4>You have {{ attempts }} attempts remaining...</h4>
         <h1>Try again</h1>
         <span class="timer-text">{{ timer }}</span>
       </div>
@@ -58,7 +58,7 @@ export default {
       },
       colorArray: [],
       currentColor: '',
-      attemptsRemaining: this.$store.state.gameState.attemptsRemaining,
+      attempts: this.$store.state.gameState.attempts,
     }
   },
   created () {

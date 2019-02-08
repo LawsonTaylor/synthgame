@@ -307,13 +307,6 @@ export default {
     },
     startAgain() {
       this.$emit("startagain");
-<<<<<<< HEAD
-=======
-    },
-    startLastLevel() {
-      this.$emit("startlastlevel");
-      console.log("startlastlevel in failure method triggered");
->>>>>>> 85ce39562fdddfd6b04bdcaff3a89cfa11d901a7
     }
   },
   computed: {

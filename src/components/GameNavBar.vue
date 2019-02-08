@@ -67,7 +67,7 @@
     }" v-if="timerIsRunning === true && createModeIsActive === false" class="timer">{{paddedTimeLeftString}}</span> -->
 
     <span v-if="gameMode">
-      <button class="button-next" @click="makeAttempt">Attemps Remaning: <span>{{attemptsRemaining}}</span></button>
+      <button class="button-next" @click="makeAttempt">Attemps: <span>{{attempts}}</span></button>
     </span>
 
 
@@ -189,8 +189,8 @@ export default {
     paddedHighScoreString () {
       return `${padStart(this.highScore, 5, '0')}`
     },
-    attemptsRemaining () {
-      return this.$store.state.gameState.attemptsRemaining;
+    attempts () {
+      return this.$store.state.gameState.attempts;
     },
     gameMode() {
       return !this.$store.state.gameState.createModeIsActive;
@@ -208,7 +208,8 @@ export default {
         // if valid submit score, pass level 
       this.$store.dispatch('makeAttempt');
 
-      if(this.attemptsRemaining === 0){
+      if(this.attempts === 25){
+        /// go to next level
         this.$store.dispatch('gameOver');
         //reset counter
       } 

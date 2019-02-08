@@ -64,7 +64,7 @@ export default new Vuex.Store({
     },
     gameState: {
       attemptMade: false,
-      attemptsRemaining: 10,
+      attempts: 0,
       createModeIsActive: false,
       sweepArmed: true,
       marginOsc: 0,
@@ -293,11 +293,11 @@ export default new Vuex.Store({
     notifyAttemptMade (state) {
       state.gameState.attemptMade = !state.gameState.attemptMade;
     },
-    decrementAttempts (state) {
-      state.gameState.attemptsRemaining -= 1;
+    incrementAttempts (state) {
+      state.gameState.attempts += 1;
     },
     setAttempts (state, payload) {
-      state.gameState.attemptsRemaining = payload.attempts;
+      state.gameState.attempts = payload.attempts;
     }
   },
   getters: {
@@ -328,7 +328,7 @@ export default new Vuex.Store({
   actions: {
     makeAttempt ({ state, commit }) {
       commit('notifyAttemptMade')
-      commit('decrementAttempts')
+      commit('incrementAttempts')
     },
     shuffleRackSlotArray({state, commit}) {
       var array = state.gameState.rackSlotArray
