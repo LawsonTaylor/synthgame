@@ -281,7 +281,20 @@ export default {
           subdivision: "8n"
         },
         (time, note) => {
+          // Via store, load Sequence step state
+          this.$store.commit("setStep", {
+            note
+          });
+          this.$store.commit("loadRecordedState", {
+            note,
+            audio
+          });
+          // this.$store.commit("setRecordedState", {
+          //   note
+          // }); // moved to oscillator1
+
           this.setStep(note);
+
           if (this.noteArray[note].selected) {
             audio.playNote(this.noteArray[note].pitch, {
               noteLength: "16n",

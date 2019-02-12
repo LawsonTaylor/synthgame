@@ -19,15 +19,6 @@
               {name: 'WaveformGoal', min: 0, max:3, value: typeOscGoal},
             ]"/>
     <div class="knobs">
-      <!-- <module-knob
-        v-model="freqDial"
-        v-if="knobsAvailable.frequency || createModeIsActive"
-        :min="0"
-        :step="1"
-        :max="freqArray.length - 1"
-        knobColor="#ff8574"
-        name="Octave"
-      ></module-knob> -->
       <div class="octave-wrapper"
         v-if="knobsAvailable.frequency || createModeIsActive"
       >
@@ -78,6 +69,7 @@
       </div>
 
     </div>
+    <button type="button" name="button" @click="startRecording" :class="{ active: isRecording }">Record</button>
   </div>
 </template>
 
@@ -99,6 +91,7 @@ export default {
   name: "OscillatorModule",
   data() {
     return {
+      isRecording: false,
       name: "oscillator1",
       oscillator1: {},
       moduleColor: MODULE_OSCILLATORONE_COLOR
@@ -115,6 +108,13 @@ export default {
     this.oscillator1 = audio.oscillator1.state.device;
   },
   methods: {
+    startRecording() {
+      if (!this.isRecording) {
+        this.isRecording = true;
+      } else {
+        this.isRecording = false;
+      }
+    },
     incrementOctave() {
       let currentOctave = this.freqArray.findIndex(el => el == this.frequency);
       if (currentOctave < 3) {
@@ -162,6 +162,9 @@ export default {
     // }),
     ...vuexSyncGen("oscillator1", "detune", val => {
       self.oscillator1.detune.value = character.oscillator1.detune(val);
+      if (self.isRecording) {
+        self.$store.dispatch("setRecordedState");
+      }
     }),
     ...mapState({
       frequencyGoal: state => state.gameState.goal.oscillator1.frequency,
@@ -179,6 +182,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.active {
+  background: #ff8574;
+}
+
 .switch {
   border: 1px solid #ff8574;
 }

@@ -688,7 +688,8 @@ export default [
     },
     envelope2: {
       attack: true,
-      decay: true
+      decay: true,
+      amount: true
     },
     lfo: {
       amount: true,
