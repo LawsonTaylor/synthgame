@@ -92,6 +92,9 @@ export default {
     log(`Starting oscillator1`);
     oscillator1.start();
 
+    log(`Starting oscillator2`);
+    oscillator2.start(); // TODO remove if osc2 should not always be playing in levels
+
     return output;
   },
   setBpm(bpm) {
@@ -109,6 +112,9 @@ export default {
     }
     this.state.loop = new Tone.Sequence(callback, noteArray, subdivision);
     return this.state.loop;
+  },
+  restartMainLoop() {
+    return (this.state.Tone.Transport.position = "0:0:0");
   },
   stopMainLoop() {
     this.state.loop.stop();

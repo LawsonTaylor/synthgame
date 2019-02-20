@@ -100,7 +100,7 @@ export default {
       name: "oscillator2",
       oscillator2: {},
       moduleColor: MODULE_OSCILLATORTWO_COLOR,
-      freqArray: ['65', '131', '262', '523'],
+      freqArray: ["65", "131", "262", "523"]
     };
   },
   components: {
@@ -113,11 +113,11 @@ export default {
     self = this;
     this.oscillator2 = audio.oscillator2.state.device;
     // start the second oscillator
-    this.oscillator2.start();
+    // this.oscillator2.start();
   },
   beforeDestroy() {
     // stop the second oscillator
-    this.oscillator2.stop();
+    // this.oscillator2.stop();
   },
   methods: {
     incrementOctave() {
@@ -153,7 +153,7 @@ export default {
     //   }
     // },
     ...vuexSyncGen("oscillator2", "frequency", val => {
-      self.oscillator2.frequency.value = character.oscillator2.frequency(val)
+      self.oscillator2.frequency.value = character.oscillator2.frequency(val);
     }),
     ...vuexSyncGen("oscillator2", "typeOsc", val => {
       // if (self.oscillator2.type === character.oscillator2.typeOsc(val)) return;
