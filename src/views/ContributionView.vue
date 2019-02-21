@@ -342,17 +342,17 @@ export default {
 
       // Set noteArray to sequence preset locally
       this.noteArray = presets[index].sequenceArray;
-      audio.restartMainLoop();
+      // audio.restartMainLoop();
       console.log("this.noteArray", this.noteArray);
       console.log("presets[index].sequenceArray", presets[index].sequenceArray);
     },
     loadEmptyPreset() {
-      this.noteArray = fill(range(0, 16), {
-        selected: false,
-        pitch: 0,
-        volume: false,
-        glide: false
-      });
+      // this.noteArray = fill(range(0, 16), {
+      //   selected: false,
+      //   pitch: 0,
+      //   volume: false,
+      //   glide: false
+      // });
     },
     padClick(event, pad, index) {
       // pad click logic goes here:
