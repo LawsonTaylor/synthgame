@@ -24,6 +24,7 @@ import audio from "./audio";
 import PossibleValues from "./stores/possibleValues";
 import AudioParameters from "./stores/audioParameters";
 import NoSequenceAvailable from "./stores/sequence";
+import NoAutomationAvailable from "./stores/automation";
 import NoKnobsAvalible from "./stores/noKnobsAvalible";
 
 Vue.use(Vuex);
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     avatarUrl: null,
     audioParameters: AudioParameters(),
     sequence: NoSequenceAvailable,
+    automation: NoAutomationAvailable,
     roomId: null,
     contributionId: null,
     roomHighScores: [
@@ -82,7 +84,7 @@ export default new Vuex.Store({
     resetPreviewTimer(state) {
       state.gameState.previewTimer = 8;
     },
-    // Contribution 
+    // Contribution
     setContributionLink(state, { link }) {
       state.contributionId = link;
     },
@@ -146,6 +148,13 @@ export default new Vuex.Store({
     },
     setSequence(state, { parameter, value }) {
       state[parameter] = value;
+    },
+    setAutomation(state, { parameter, value }) {
+      state[parameter] = value;
+    },
+    setAudioParameters(state, { parameter, value }) {
+      state[parameter] = value;
+      // this.setSynthToAudioParameters(); // not needed because chance will be picked up by controls individually, as long as they are v-show within module
     },
     setPresetBpm(state, bpm) {
       state.bpm = bpm;

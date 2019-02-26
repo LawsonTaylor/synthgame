@@ -7,7 +7,7 @@ export const vuexSyncGen = (device, parameter, setCallback) => {
     [parameter]: {
       get: () => store.state.audioParameters[device][parameter],
       set: value => {
-        console.log(`VALUE: ${value}`);
+        // console.log(`VALUE: ${value}`);
         store.dispatch("setAudioParameter", {
           device,
           parameter,
@@ -45,6 +45,36 @@ export const vuexSyncGenSequence = (parameter, setCallback) => {
       get: () => store.state[parameter],
       set: value => {
         store.commit("setSequence", {
+          parameter,
+          value
+        });
+        return setCallback ? setCallback(value) : value;
+      }
+    }
+  };
+};
+
+export const vuexSyncGenAutomation = (parameter, setCallback) => {
+  return {
+    [parameter]: {
+      get: () => store.state[parameter],
+      set: value => {
+        store.commit("setAutomation", {
+          parameter,
+          value
+        });
+        return setCallback ? setCallback(value) : value;
+      }
+    }
+  };
+};
+
+export const vuexSyncGenAudioParameters = (parameter, setCallback) => {
+  return {
+    [parameter]: {
+      get: () => store.state[parameter],
+      set: value => {
+        store.commit("setAudioParameters", {
           parameter,
           value
         });

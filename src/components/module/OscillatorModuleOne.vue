@@ -27,8 +27,8 @@
         knobColor="#ff8574"
         name="Octave"
       ></module-knob> -->
-      <transition name="fade" appear mode="out-in" :duration="300">
-        <div class="octave-wrapper" v-if="knobsAvailable.frequency || createModeIsActive" >
+      <!-- <transition name="fade" appear mode="out-in" :duration="300"> -->
+        <div class="octave-wrapper" v-show="knobsAvailable.frequency || createModeIsActive" >
           <div class="switch">
             <button class="drop" color="#ff8574" @click="incrementOctave">
               <svg version="1.1"
@@ -52,21 +52,21 @@
         </div>
         <module-knob
           v-model="detune"
-          v-else-if="knobsAvailable.detune || createModeIsActive"
+          v-show="knobsAvailable.detune || createModeIsActive"
           :min="0"
           :max="100"
           class="drop"
           knobColor="#ff8574"
           name="Pitch"
         />
-        <div class="button-wrapper drop" v-else-if="knobsAvailable.typeOsc || createModeIsActive">
+        <div class="button-wrapper drop" v-show="knobsAvailable.typeOsc || createModeIsActive">
           <module-button color="#ff8574" shape="sine" :isPressed="typeOsc==='sine'" @click.native="typeOsc='sine'"/>
           <module-button color="#ff8574" shape="square" :isPressed="typeOsc==='square'" @click.native="typeOsc='square'"/>
           <module-button color="#ff8574" shape="sawtooth" :isPressed="typeOsc==='sawtooth'" @click.native="typeOsc='sawtooth'"/>
           <module-button color="#ff8574" shape="triangle" :isPressed="typeOsc==='triangle'" @click.native="typeOsc='triangle'"/>
           <p>WAVEFORM</p>
         </div>
-      </transition>
+      <!-- </transition> -->
 
     </div>
   </div>

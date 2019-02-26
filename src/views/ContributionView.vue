@@ -195,20 +195,42 @@
               </button>
             </div>
           </div>
-          <div class="screen--inner">
+          <div class="screen--inner" :class="{recorded: controlAutomated }">
             <!-- <transition name="fade" appear mode="out-in" :duration="300"> -->
-              <oscillator-module-one v-show="moduleIsUseable('oscillator1')"/>
+              <oscillator-module-one v-if="moduleIsUseable('oscillator1')"/>
               <oscillator-module-two v-show="moduleIsUseable('oscillator2')"/>
-              <filter-module v-show="moduleIsUseable('filter')"/>
-              <envelope-module v-show="moduleIsUseable('envelope')"/>
-              <lfo-module v-show="moduleIsUseable('lfo')"/>
-              <envelope-module-two v-show="moduleIsUseable('envelope2')"/>
+              <filter-module v-if="moduleIsUseable('filter')"/>
+              <envelope-module v-if="moduleIsUseable('envelope')"/>
+              <lfo-module v-if="moduleIsUseable('lfo')"/>
+              <envelope-module-two v-if="moduleIsUseable('envelope2')"/>
               <sequencer-module
-                v-show="moduleIsUseable('sequencer')"
+                v-if="moduleIsUseable('sequencer')"
                 :sequencer-name="nav.active.knobName"
               />
-              <router-module v-show="moduleIsUseable('router')"/>
+              <router-module v-if="moduleIsUseable('router')"/>
             <!-- </transition> -->
+            <div v-if="moduleIsUseable('oscillator1')||moduleIsUseable('oscillator2')||moduleIsUseable('filter')||moduleIsUseable('envelope')||moduleIsUseable('envelope2')||moduleIsUseable('lfo')">
+              <button @click="cancelRecord" v-if="recording" class="btn btn_stroke btn_primary">
+                <span class="btn--inner">
+                  <span class="btn--inner-text">Cancel recording</span>
+                </span>
+              </button>
+              <button @click="clearAutomation" v-else-if="controlAutomated" class="btn btn_stroke btn_primary">
+                <span class="btn--inner">
+                  <span class="btn--inner-text">Clear automation</span>
+                </span>
+              </button>
+              <button v-else-if="countDownForRecord" class="btn btn_stroke btn_primary">
+                <span class="btn--inner">
+                  <span class="btn--inner-text">{{countDown}}</span>
+                </span>
+              </button>
+              <button v-else @click="prepareRecord" class="btn btn_stroke btn_primary">
+                <span class="btn--inner">
+                  <span class="btn--inner-text">Record automation</span>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </transition>
@@ -321,13 +343,18 @@ import levels from "@/levels";
 import range from "lodash/range";
 import Nav from "@/nav";
 import { mapState } from "vuex";
+import { vuexSyncGenAutomation } from "@/utils";
+import { vuexSyncGenAudioParameters } from "@/utils";
 
 export default {
   name: "home",
   data() {
     return {
-      activeModule: "oscillator1",
+      countDownForRecord: false,
+      recording: false,
       slide: 0,
+      moduleName: 'sequencer',
+      moduleKnob: 'steps',
       marginArray: [0, 0.2, 0.4, 0.6],
       oscillatorColor: MODULE_OSCILLATOR_COLOR,
       oscillatorTwoColor: MODULE_OSCILLATORTWO_COLOR,
@@ -376,15 +403,38 @@ export default {
       }
     });
   },
-  watch: {
+watch: {
   shareLink() {
     this.$store.dispatch("getContribution");
     },
+    activeButton() {
+      this.recordStepAutomation();
+    }
   },
   beforeDestroy() {
     audio.stopOscTwo();
   },
   methods: {
+    clearAutomation() {
+      this.automation[this.moduleName.replace(/\s+/g, '')][this.knobName].recorded = false;
+    },
+    recordStepAutomation() {
+      if (this.recording == true) {
+        this.automation[this.moduleName.replace(/\s+/g, '')][this.knobName].steps[this.activeButton] = this.audioParameters[this.moduleName.replace(/\s+/g, '')][this.knobName]
+      }
+      if (this.activeButton == 15 && this.recording == true) {
+        this.recording = false;
+        this.automation[this.moduleName.replace(/\s+/g, '')][this.knobName].recorded = true;
+        console.log('this.automation',this.automation);
+      }
+    },
+    cancelRecord() {
+      this.recording = false;
+    },
+    prepareRecord() {
+      this.countDownForRecord = true;
+
+    },
     generateShareLink() {
       this.$store.dispatch("generateContributionLink");
     },
@@ -413,7 +463,7 @@ export default {
     },
     init() {
       // Retrieve highscore from local storage
-      this.$store.commit("updateHighScore", localStorage.getItem("highscore"));
+      // this.$store.commit("updateHighScore", localStorage.getItem("highscore"));
       // initialize the synth
       audio.init().toMaster();
 
@@ -474,6 +524,15 @@ export default {
           if (this.sequence[note].snare) {
             audio.playSnare();
           }
+          if (this.automation.oscillator1.detune.recorded) {
+            this.audioParameters.oscillator1.detune = this.automation.oscillator1.detune.steps[note]
+          }
+          if (this.automation.oscillator1.typeOsc.recorded) {
+            this.audioParameters.oscillator1.typeOsc = this.automation.oscillator1.typeOsc.steps[note]
+          }
+          if (this.automation.oscillator1.frequency.recorded) {
+            this.audioParameters.oscillator1.frequency = this.automation.oscillator1.frequency.steps[note]
+          }
         }
       );
       audio.startOscTwo();
@@ -507,14 +566,14 @@ export default {
       this.show2ndScreen = true;
       this.show3rdScreen = false;
       this.nav.active = this.nav.groups[index].items[key];
-      let module = this.nav.groups[index],
-        moduleName = module.moduleName,
-        knobName = module.items[key].title;
+      let module = this.nav.groups[index];
+        this.moduleName = module.moduleName;
+        this.knobName = module.items[key].title;
 
       this.$store.commit({
         type: "setKnobAvalible",
-        knobName: knobName,
-        moduleName: moduleName
+        knobName: this.knobName,
+        moduleName: this.moduleName
       });
     },
     moduleIsUseable(moduleName) {
@@ -526,8 +585,25 @@ export default {
     }
   },
   computed: {
+    controlAutomated() {
+      if (this.moduleName !== "sequencer") {
+        if (this.automation[this.moduleName.replace(/\s+/g, '')][this.knobName].recorded) {
+          return true
+        }
+      }
+    },
+    countDown() {
+      if (this.countDownForRecord && this.activeButton == 15) {
+        this.recording = true;
+        this.countDownForRecord = false;
+      };
+      return Math.round((16 - this.activeButton)/4)
+    },
+    ...vuexSyncGenAutomation("automation", val => {}),
+    ...vuexSyncGenAudioParameters("audioParameters", val => {}),
     ...mapState({
-      sequence: state => state.sequence
+      sequence: state => state.sequence,
+      activeButton: state => state.activeButton
     }),
     shareLink() {
       return this.$store.state.contributionId;
@@ -568,7 +644,13 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+  .recorded {
+    circle.touchpoint, g {
+      transition: all 0.2s linear !important
+    }
+  }
+
   .screen--inner_reduced {
     height: calc(100vh - 58px);
     @media screen and (max-width: 799px) {
