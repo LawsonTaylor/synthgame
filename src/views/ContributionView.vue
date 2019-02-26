@@ -248,41 +248,9 @@
           </button>
         </div>
         <div class="screen--share">
-          <p style="margin-bottom: 20px; text-align: right;">Anyone with this link can join and create their song on top of this one.</p>
-          <div v-if="!shareLink" class="play-with-friends">
-            <button @click="generateShareLink" class="btn btn_stroke btn_primary">
-              <span class="btn--inner">
-                <span class="btn--inner-text">Play with friends</span>
-              </span>
-            </button>
-          </div>
-          <div v-if="shareLink" class="screen--share-inner">
-            <div class="screen--share-url">
-              <span>{{ shareLink }}</span>
-            </div>
-            <button class="btn btn_icon btn_primary">
-              <svg viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect
-                  x="8.904"
-                  y="8"
-                  width="12.999"
-                  height="13"
-                  rx="2"
-                  stroke="#fff"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></rect>
-                <path
-                  d="M4.902 14h-1a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-                  stroke="#fff"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-            </button>
-          </div>
+          <button class='preset-btn' @click="incrementPreset">-</button>
+          <h2>{{ pickedPreset }}</h2>
+          <button class='preset-btn' @click="decrementPreset">+</button>
         </div>
       </div>
     </div>
@@ -362,11 +330,11 @@ export default {
     this.show2ndScreen = true;
   },
   created() {
-    const contributionId = this.$route.params.contribution_id;
-    if (contributionId !== "synth") {
-      console.log(`contributionId ${contributionId}`);
-      this.$store.commit("setContributionLink", { link: contributionId });
-    }
+    // const contributionId = this.$route.params.contribution_id;
+    // if (contributionId !== "synth") {
+    //   console.log(`contributionId ${contributionId}`);
+    //   this.$store.commit("setContributionLink", { link: contributionId });
+    // }
     this.init();
     this.initSynth();
     // Pc keyboard listener (might be needed for mobile)
@@ -385,6 +353,20 @@ export default {
     audio.stopOscTwo();
   },
   methods: {
+    loadPreset() {
+    const preset = presets[this.pickedPreset];
+    this.$store.commit('setPresetBpm', preset.bpm);
+    this.$store.commit('setUserContributionData', { preset: preset.parameterValues, sequence: preset.sequenceArray });
+    this.$store.dispatch('setSynthToAudioParameters', audio);
+    },
+    incrementPreset() {
+      this.pickedPreset = this.pickedPreset < presets.length ? this.pickedPreset + 1 : 0;
+      this.loadPreset()
+    },
+    decrementPreset() {
+      this.pickedPreset = this.pickedPreset > 0 ? this.pickedPreset - 1 : presets.length-1;
+      this.loadPreset();
+    },
     generateShareLink() {
       this.$store.dispatch("generateContributionLink");
     },
