@@ -422,30 +422,30 @@ export default {
                 self.$store.state.audioParameters.oscillator2.frequency
             });
           }
-          if (this.sequence[note].kick) {
-            audio.playKick();
-          }
-          if (this.sequence[note].hat) {
-            audio.playHat();
-          }
-          if (this.sequence[note].clap) {
-            audio.playClap();
-          }
-          if (this.sequence[note].clap2) {
-            audio.playClap2();
-          }
-          if (this.sequence[note].cymbal) {
-            audio.playCymbal();
-          }
-          if (this.sequence[note].labmyc) {
-            audio.playLabmyc();
-          }
-          if (this.sequence[note].noise) {
-            audio.playNoise();
-          }
-          if (this.sequence[note].snare) {
-            audio.playSnare();
-          }
+          // if (this.sequence[note].kick) {
+          //   audio.playKick();
+          // }
+          // if (this.sequence[note].hat) {
+          //   audio.playHat();
+          // }
+          // if (this.sequence[note].clap) {
+          //   audio.playClap();
+          // }
+          // if (this.sequence[note].clap2) {
+          //   audio.playClap2();
+          // }
+          // if (this.sequence[note].cymbal) {
+          //   audio.playCymbal();
+          // }
+          // if (this.sequence[note].labmyc) {
+          //   audio.playLabmyc();
+          // }
+          // if (this.sequence[note].noise) {
+          //   audio.playNoise();
+          // }
+          // if (this.sequence[note].snare) {
+          //   audio.playSnare();
+          // }
         }
       );
       audio.startOscTwo();

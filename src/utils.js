@@ -7,7 +7,7 @@ export const vuexSyncGen = (device, parameter, setCallback) => {
     [parameter]: {
       get: () => store.state.audioParameters[device][parameter],
       set: value => {
-        console.log(`VALUE: ${value}`);
+        // console.log(`VALUE: ${value}`);
         store.dispatch("setAudioParameter", {
           device,
           parameter,

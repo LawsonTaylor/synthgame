@@ -82,7 +82,7 @@ export default new Vuex.Store({
     resetPreviewTimer(state) {
       state.gameState.previewTimer = 8;
     },
-    // Contribution 
+    // Contribution
     setContributionLink(state, { link }) {
       state.contributionId = link;
     },
@@ -467,6 +467,7 @@ export default new Vuex.Store({
     setSynthToGoal({ state, commit }, synth) {
       commit("setAttemptNotActive");
       console.log("setSynthToGoal triggered in store");
+      console.log(audio.oscillator1.state.device);
       synth.envelope.state.device.attack = character.envelope.attack(
         state.gameState.goal.envelope.attack
       );
@@ -609,6 +610,7 @@ export default new Vuex.Store({
     setSynthToAudioParameters({ state, commit }, synth) {
       commit("setAttemptActive");
       console.log("setSynthToAudioParameters triggered in store");
+      console.log(audio.oscillator1.state.device);
       synth.envelope.state.device.attack = character.envelope.attack(
         state.audioParameters.envelope.attack
       );

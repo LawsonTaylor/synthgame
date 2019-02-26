@@ -258,7 +258,7 @@
             :class="[(activeModule == 0 ? 'active' : '')]"
           />
           <oscillator-module-two
-            v-show="moduleIsUseable('oscillator2')"
+            v-if="moduleIsUseable('oscillator2')"
             :class="[(activeModule == 1 ? 'active' : '')]"
           />
           <filter-module
@@ -767,6 +767,7 @@ export default {
 
       // randomly pick preset
       this.pickedPreset = Math.round(Math.random() * (presets.length - 1));
+      console.log('this.pickedPreset',this.pickedPreset);
 
       this.newPickedPreset = this.pickPreset(level);
 
