@@ -197,17 +197,17 @@
           </div>
           <div class="screen--inner" :class="{recorded: controlAutomated }">
             <!-- <transition name="fade" appear mode="out-in" :duration="300"> -->
-              <oscillator-module-one v-if="moduleIsUseable('oscillator1')"/>
+              <oscillator-module-one v-show="moduleIsUseable('oscillator1')"/>
               <oscillator-module-two v-show="moduleIsUseable('oscillator2')"/>
-              <filter-module v-if="moduleIsUseable('filter')"/>
-              <envelope-module v-if="moduleIsUseable('envelope')"/>
-              <lfo-module v-if="moduleIsUseable('lfo')"/>
-              <envelope-module-two v-if="moduleIsUseable('envelope2')"/>
+              <filter-module v-show="moduleIsUseable('filter')"/>
+              <envelope-module v-show="moduleIsUseable('envelope')"/>
+              <lfo-module v-show="moduleIsUseable('lfo')"/>
+              <envelope-module-two v-show="moduleIsUseable('envelope2')"/>
               <sequencer-module
-                v-if="moduleIsUseable('sequencer')"
+                v-show="moduleIsUseable('sequencer')"
                 :sequencer-name="nav.active.knobName"
               />
-              <router-module v-if="moduleIsUseable('router')"/>
+              <router-module v-show="moduleIsUseable('router')"/>
             <!-- </transition> -->
             <div v-if="moduleIsUseable('oscillator1')||moduleIsUseable('oscillator2')||moduleIsUseable('filter')||moduleIsUseable('envelope')||moduleIsUseable('envelope2')||moduleIsUseable('lfo')">
               <button @click="cancelRecord" v-if="recording" class="btn btn_stroke btn_primary">
@@ -217,7 +217,7 @@
               </button>
               <button @click="clearAutomation" v-else-if="controlAutomated" class="btn btn_stroke btn_primary">
                 <span class="btn--inner">
-                  <span class="btn--inner-text">Clear automation</span>
+                  <span class="btn--inner-text">Clear paramter locks</span>
                 </span>
               </button>
               <button v-else-if="countDownForRecord" class="btn btn_stroke btn_primary">
@@ -227,7 +227,7 @@
               </button>
               <button v-else @click="prepareRecord" class="btn btn_stroke btn_primary">
                 <span class="btn--inner">
-                  <span class="btn--inner-text">Record automation</span>
+                  <span class="btn--inner-text">Record parameter locks</span>
                 </span>
               </button>
             </div>
@@ -577,11 +577,7 @@ watch: {
       });
     },
     moduleIsUseable(moduleName) {
-      if (this.createModeIsActive) {
-        return true;
-      } else {
         return some(this.knobsAvailable[moduleName]); // some are truthy
-      }
     }
   },
   computed: {

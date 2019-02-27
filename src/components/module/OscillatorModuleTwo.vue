@@ -168,7 +168,7 @@ export default {
       volumeGoal: state => state.gameState.goal.oscillator2.volume,
       // phaseGoal: state => state.gameState.goal.oscillator2.phase,
       typeArray: state => state.gameState.possibleValues.oscillator2.typeOsc,
-      freqArray: state => state.gameState.possibleValues.oscillator2.frequency,
+      // freqArray: state => state.gameState.possibleValues.oscillator2.frequency,
       knobsAvailable: state => state.gameState.knobsAvailable.oscillator2,
       createModeIsActive: state => state.gameState.createModeIsActive
     })
